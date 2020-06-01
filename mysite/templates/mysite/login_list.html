@@ -1,0 +1,52 @@
+{% extends "mysite/base.html" %}
+
+<h1 class='label'><a>Logins</a></h1>
+
+{% block content %}
+      <a class="btn btn-default" href="{% url 'logininsert'                          %}" >Add login</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarklist'  %}">                  <span>Bookmarks</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkinsert'                       %}" >Add bookmark</span></a>
+      <a class="btn btn-default" href="{% url 'categorylist'  %}">                  <span>Categories</span></a>
+      <a class="btn btn-default" href="{% url 'categoryinsert'                       %}" >Add category</span></a>
+      <a class="btn btn-default" href="{% url 'identifierlist'  %}">                <span>Identifiers</span></a>
+      <a class="btn btn-default" href="{% url 'identifierinsert'                     %}" >Add identifier</span></a>
+      <a class="btn btn-default" href="{% url 'emailhostlist'  %}">                 <span>Emailhosts</span></a>
+      <a class="btn btn-default" href="{% url 'emailhostinsert'                      %}" >Add emailhost</span></a>
+      <a class="btn btn-default" href="{% url 'identifier2list'  %}">               <span>Id..2s</span></a>
+      <a class="btn btn-default" href="{% url 'identifier2insert'                    %}" >Add id..2</span></a>
+      <a class="btn btn-default" href="{% url 'menu'                                 %}" >Menu</span></a>
+<hr>
+
+<h2>
+<table>
+    <tr>
+     
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'bookmark' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'identifier' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifiers</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'identifier2' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifier2s</span></a> </td>
+    </tr>
+    </h1>
+</table>
+<table>
+{% for login in logins %}
+    <tr>
+    <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'loginupdate' pk=login.pk %} ">           <span class="glyphicon glyphicon-pencil"></span></a> </td>
+    <td> <a class="btn btn-default" href="{% url 'logindeleteperm' pk=login.pk %} ">       <span class="glyphicon glyphicon-remove"></span></a> </td>
+    <td> <a                         href='{{login.bookmark}}' target='_blank'  >           <span class='detail'>{{ login.bookmark }}</span> </a> </td>
+    {% if login.emailhost %}
+    <td>                               <span class='detail'>{{ login.identifier }}@{{login.emailhost}}</span> </td>
+    {% else %}
+    <td>                               <span class='detail'>{{ login.identifier }}</span> </td>
+    {% endif %}
+    <td>                               <span class='detail'>{{ login.identifier2 }}</span> </td>
+    </tr>
+{% endfor %}
+</table>
+</h2>
+</body>
+{% endblock content %}
+

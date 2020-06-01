@@ -1,0 +1,43 @@
+{% extends "mysite/base.html" %}
+
+<h1 class='label'><a>Bookmarks</a></h1>
+
+{% block content %}
+      <a class="btn btn-default" href="{% url 'bookmarkinsert'                       %}" >Add bookmark</span></a>
+      <a class="btn btn-default" href="{% url 'categorylist'  %}">                  <span>Categories</span></a>
+      <a class="btn btn-default" href="{% url 'categoryinsert'                       %}" >Add category</span></a>
+      <a class="btn btn-default" href="{% url 'identifierinsert'                     %}" >Add identifier</span></a>
+      <a class="btn btn-default" href="{% url 'emailhostinsert'                      %}" >Add emailhost</span></a>
+      <a class="btn btn-default" href="{% url 'identifier2insert'                    %}" >Add identifier2</span></a>
+      <a class="btn btn-default" href="{% url 'loginlist'  %}">                     <span>Logins</span></a>
+      <a class="btn btn-default" href="{% url 'logininsert'                          %}" >Add login</span></a>
+      <a class="btn btn-default" href="{% url 'menu'                                 %}" >Menu</span></a>
+<hr>
+<h2>
+<table>
+    <tr>
+     
+    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'bookmark' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'category' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</span></a> </td>
+    </tr>
+    </h1>
+</table>
+
+<h2>
+<table>
+{% for bookmark in bookmarks %}
+    <tr>
+    <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'bookmarkupdate'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
+    <td> <a class="btn btn-default" href="{% url 'bookmarkdeleteperm' pk=bookmark.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
+    <td> <a                         href='{{bookmark.name}}' target='_blank'             > <span class='detail'>{{ bookmark.name }}</span> </a> </td>
+    <td>                                                                                   <span class='detail'>{{ bookmark.category }}</span> </td>
+    <td>                                                                                   <span class='detail'>{{ bookmark.subcategory }}</span> </td>
+    </tr>
+{% endfor %}
+</table>
+</h2>
+</body>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+{% if liveness == 'live' %}
+    <h1 class='label'><a>Photos</a></h1>
+{% else %}
+    <h1 class='label'><a>Deleted photos</a></h1>
+{% endif %}
+
+<br><br>
+    <p>
+    <a class="btn btn-default" href="{% url 'photoinsert' %}">                  <span>Add photo</span></a>
+    <a class="btn btn-default" href="{% url 'photolistdeleted' %}">             <span>Deleted photos</span></a>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >        <span>Menu</span></a>
+    </p>
+<br>
+<ul>
+  {% for photo in photos %}
+	<hr>
+      <h2 class="item"><span class='detail'>{{ photo.title }} </span></h2>
+      <h2>
+      <a class="btn btn-default"     href="{% url 'photoupdate'      pk=photo.pk                   %}">     <span>Update photo              </span></a>
+      {% if liveness == 'live' %}
+          <a class="btn btn-default" href="{% url 'photochange'      pk=photo.pk mode='deletetemp' %}">     <span>Delete photo              </span></a>
+      {% else %}
+          <a class="btn btn-default" href="{% url 'photochange'      pk=photo.pk mode='restore'    %}">     <span>Restore photo             </span></a>
+          <a class="btn btn-default" href="{% url 'photodeleteperm'  pk=photo.pk                   %}">     <span>Delete photo permanantly  </span></a>
+      {% endif %}
+      <span class='detail'>Priority = {{photo.priority}}</span></h2>
+<h2>
+          <img src="{{ photo.cover.url}}", height="auto", width="1100", alt="{{ photo.title }}">
+      	</h2>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+      <h2><span class='detail'>Priority = {{photo.priority}}</span></h2>
+      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+{% endcomment %}

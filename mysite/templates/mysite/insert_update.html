@@ -1,0 +1,6 @@
+<h1>Insert a new record into the database or update an existing one</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Update the database with this data</button>
+</form>

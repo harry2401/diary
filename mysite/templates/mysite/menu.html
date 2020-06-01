@@ -1,0 +1,25 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+{% comment %}
+{% endcomment %}
+
+
+<a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                                <span>Current events</span></a>
+<a class="btn btn-default" href="{% url 'eventlist' 'notcurrent' %}" >                              <span>Past events</span></a>
+<a class="btn btn-default" href="{% url 'photolist'  %}">                                           <span>Photos</span></a>
+<a class="btn btn-default" href="{% url 'medreadinglist'  %}">                                      <span>Medreadings</span></a>
+<a class="btn btn-default" href="{% url 'bookmarklist'  %}">                                        <span>Bookmarks</span></a>
+<a class="btn btn-default" href="{% url 'categorylist'  %}">                                        <span>Categories</span></a>
+<a class="btn btn-default" href="{% url 'identifierlist'  %}">                                      <span>Identifiers</span></a>
+<a class="btn btn-default" href="{% url 'emailhostlist'  %}">                                       <span>Emailhosts</span></a>
+<a class="btn btn-default" href="{% url 'identifier2list'  %}">                                     <span>Identifier2s</span></a>
+<a class="btn btn-default" href="{% url 'loginlist'  %}">                                           <span>Logins</span></a>
+<br>
+<a class="btn btn-default" href="{% url 'siteupdate' pk=site.pk %}">                                <span>Colours</span></a>
+<a class="btn btn-default" href="{% url 'password' %}">                                             <span>Password</span></a>
+<a class="btn btn-default" href="{% url 'noteupdate' pk=site.pk %}">                                <span>Note</span></a>
+<hr>
+         
+</body>
+{% endblock content %}

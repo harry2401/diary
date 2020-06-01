@@ -1,0 +1,61 @@
+<html>
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+{% comment %}
+{% endcomment %}
+<style>
+
+    h1.label , h1.label :visited { text-align:center; margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{site.datecolour}}; font-size: xx-large; font-weight:bold; font-family: 'Arial'; text-decoration: none; }
+    h2.date , h2.date :visited { color: {{site.datecolour}}; }
+    h2.label , h2.label :visited { text-align:center; color: {{site.datecolour}}; }
+
+    hr { color: {{site.datecolour}}; background-color: {{site.datecolour}}}}; font-weight:bold; }
+    hr.end { color: {{site.datecolour}}; background-color: {{site.datecolour}}}}; font-weight:bold; }
+    h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{site.datecolour}}; background-color:{{site.backgroundcolour}}; font-size: xx-large;
+      font-weight:bold; font-family: 'Arial'; text-align:center; text-decoration: none; }
+    h1.label , h1.label :visited { margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{site.datecolour}}; font-size: xx-large; font-weight:bold;
+      font-family: 'Arial'; text-align:center; text-decoration: none; }
+    h2.item , h2.item :visited { color: {{site.backgroundcolour}}; }
+    h2 span.label , h2 span.label :visited { font-size: x-large; font-weight:bold; color: {{site.datecolour}}; }
+    a.label , a .label :visited { font-size: xx-large; font-weight:bold; color: {{site.datecolour}}; }
+    h2 span.date , h2 span.date :visited { font-size: x-large; font-weight:bold; color: {{site.datecolour}}; }
+    h2 span.detail , h2 span.detail :visited { font-size: x-large; font-weight:bold; color: {{site.detailcolour}}; }
+    h2 span.background , h2 span.background :visited { font-size: x-large; font-weight:bold; color: black; }
+   h2 a span.background , h2 a span.background :visited { font-size: x-large; font-weight:bold; color: black; }
+    body { background-color:{{site.backgroundcolour}}; }
+    body { color:{{site.backgroundcolour}}; }
+    td { color: {{site.datecolour}}; padding-left:15px; }
+    .top-menu, .top-menu:hover, .top-menu:visited { color: {{site.datecolour}}; float: right; font-size: x-large; margin-right: 20px; }
+
+
+    h2.date a span , h2.date a span :visited { color: {{site.datecolour}}; }
+    h2.error , h2.error :visited { color: #FF0000; }
+    h2 a span { color: 'crimson'; }
+    h2 a span:visited { color: {{site.datecolour}}; }
+</style>
+</head>
+<body>
+
+    {% if logged_in == False %}
+        <p class="top-menu"><small><a href="{% url 'login' %}">Log in</a></small></p>
+    {% else %}
+        <p class="top-menu"><small><a href="{% url 'logout' %}">Log out</a></small></p>
+    {% endif %}
+
+      <h1 class='label'>{{TITLE}}</h1>
+      <hr>
+
+      {% block content %}
+      {% endblock %}
+</body>
+</html>
+   
+ {#         <a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>#}
+      {% comment %}
+        <p class="top-menu"><small><a href="{% url 'django.contrib.auth.views.login' %}">Log in</a></small></p>
+      {% endcomment %}
+

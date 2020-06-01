@@ -1,0 +1,100 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+      <a class="btn btn-default" href="{% url 'medreadinginsert'                     %}" >Add reading</span></a>
+      <a class="btn btn-default" href="{% url 'eventlist' 'current'                  %}" >Menu</span></a>
+
+<hr>
+{% comment %}
+<h2>
+                <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gluc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;weight</span>
+</h2>
+{% endcomment %}
+
+<table>
+    <h2 class='item'>
+    <tr>
+    <td></td><td></td><td>weight</td><td>gluc</td><td>bp</td><td></td><td>HbA1c</td><td>HDL</td><td>LDL</td>
+    <tr>
+    </tr>
+    </h2>
+  {% for reading in readings %}
+    <tr>
+            <h2 class='item'>
+            <td>
+            <a class="btn btn-default" href="{% url 'medreadingupdate' pk=reading.pk %}">
+            <span class="glyphicon glyphicon-pencil"></span></a>
+              <a class="btn btn-default" href="{% url 'medreadingdeleteperm' pk=reading.pk %} ">
+              <span class="glyphicon glyphicon-remove"></span></a>
+             </td>
+ <td>
+    <span class='detail'>{{ reading.reading_date|date:"d-m-y" }}</span>
+             </td>
+            <td>
+              {% if reading.weight > 0  %}
+                <span class='detail'>{{ reading.weight }}</span>
+              {% else %}
+                <span class='detail'>___</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.glucose > 0  %}
+                <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;{{ reading.glucose|rjust:"20" }}  </span>
+              {% else %}
+                <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.blood_pressure_1 > 0  %}
+                <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;{{ reading.blood_pressure_1|center:"30" }}</span>
+              {% else %}
+                <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.blood_pressure_2 > 0  %}
+                <span class='detail'>/{{ reading.blood_pressure_2 }}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {% else %}
+                <span class='detail'>/__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.HbA1c > 0  %}
+                <span class='detail'>{{ reading.HbA1c }}</span>
+              {% else %}
+                <span class='detail'>___</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.HDL > 0  %}
+                <span class='detail'>{{ reading.HDL }}</span>
+              {% else %}
+                <span class='detail'>___</span>
+              {% endif %}
+             </td>
+            <td>
+              {% if reading.LDL > 0  %}
+                <span class='detail'>{{ reading.LDL }}</span>
+              {% else %}
+                <span class='detail'>___</span>
+              {% endif %}
+             </td>
+            <td>
+               {% if reading.notes  %} <span class='detail'>&nbsp;&nbsp;&nbsp;{{ reading.notes }}</span> {% endif %}
+             </td>
+
+            </h2>
+    </tr>
+
+{% endfor %}
+</table>
+</h2>
+  <br><br><br>
+  <h2>
+  {% if logged_in == True %}
+    <a class="btn btn-default" href="{% url 'unsubscribe' confirmed='no' %}"><span class='background'>Unsubscribe</span></a>
+  {% endif %}
+  </h2>
+</body>
+  {% endblock content %}
+  
