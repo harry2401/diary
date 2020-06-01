@@ -32,10 +32,10 @@ ALLOWED_HOSTS = [
 #TITLE = "Sluffpg on Postgres (Heroku)"
 #TITLE = "Diary on Sqlite3 (local)"
 #TITLE = "Diary on sqlite3 (Pythonanywhere)"
-TITLE = "Diary on Sqlite3 (Heroku)"
+#TITLE = "Diary on Sqlite3 (Heroku)"                                          # heroku sqlite3
 #TITLE = "Diary on Postgres (local)"
 #TITLE = "Diary on Postgres (Pythonanywhere)"
-#TITLE = "Diary on Postgres (Heroku)"
+TITLE = "Diary on Postgres (Heroku)"                                          # heroku postgres
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",                                  #  heroku
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -80,17 +80,18 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 DATABASES = {
     'default': {
-        "ENGINE" : "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
-        #'ENGINE': 'django.db.backends.postgresql',
+        #"ENGINE" : "django.db.backends.sqlite3",
+        #"NAME": os.path.join(BASE_DIR, "db.sqlite3")
+        'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'db_sluffpg',
-        #'USER': 'user4',
+        'NAME': 'db_postgresql',
+        'USER': 'user4',
         #'PASSWORD': 'Septembers%^&*()',
         #'HOST': 'localhost', 
 } }
-#import dj_database_url
-#db_from_env = dj_database_url.config(conn_max_age=500)
-#DATABASES['default'].update(db_from_env)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -115,7 +116,7 @@ STATIC_URL = "/static/"
 MEDIA_URL = '/media/'
 
 ## long time
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 ## from github/heroku/pythongettingstartes
@@ -127,7 +128,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 #STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 ###STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 #MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'     # heroku
 #static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
