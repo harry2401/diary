@@ -32,10 +32,10 @@ ALLOWED_HOSTS = [
 #TITLE = "Sluffpg on Postgres (Heroku)"
 #TITLE = "Diary on Sqlite3 (local)"
 #TITLE = "Diary on sqlite3 (Pythonanywhere)"
-#TITLE = "Diary on Sqlite3 (Heroku)"                                          # heroku sqlite3
+TITLE = "Diary on Sqlite3 (Heroku)"                                          # heroku sqlite3
 #TITLE = "Diary on Postgres (local)"
 #TITLE = "Diary on Postgres (Pythonanywhere)"
-TITLE = "Diary on Postgres (Heroku)"                                          # heroku postgres
+#TITLE = "Diary on Postgres (Heroku)"                                          # heroku postgres
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -83,15 +83,15 @@ DATABASES = {
         #"ENGINE" : "django.db.backends.sqlite3",
         #"NAME": os.path.join(BASE_DIR, "db.sqlite3")
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'db_sluffpg',
-        'NAME': 'db_postgresql',
+        'NAME': 'db_sluffpg',
+        #'NAME': 'db_postgresql',
         'USER': 'user4',
-        #'PASSWORD': 'Septembers%^&*()',
-        #'HOST': 'localhost', 
+        'PASSWORD': 'Septembers%^&*()',                          # local postgres
+        'HOST': 'localhost', 
 } }
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+import dj_database_url                                            # heroku postgres          ? local postgres
+db_from_env = dj_database_url.config(conn_max_age=500)             # heroku postgres          ? local postgres
+DATABASES['default'].update(db_from_env)                          # heroku postgres          ? local postgres
 
 AUTH_PASSWORD_VALIDATORS = [
     {
