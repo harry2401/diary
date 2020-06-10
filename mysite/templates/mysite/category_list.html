@@ -18,6 +18,7 @@
 {% for category in categorys %}
     <tr>
     <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'categoryupdate' pk=category.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'categorydeleteperm' pk=category.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td>                                                                                   <span class='detail'>{{ category.name }}</span> </td>
     </tr>

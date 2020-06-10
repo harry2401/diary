@@ -18,6 +18,7 @@
 {% for emailhost in emailhosts %}
     <tr>
     <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'emailhostupdate' pk=emailhost.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'emailhostdeleteperm' pk=emailhost.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td>                                                                                   <span class='detail'>{{ emailhost.name }}</span> </td>
     </tr>

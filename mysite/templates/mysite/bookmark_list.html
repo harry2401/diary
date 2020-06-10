@@ -33,8 +33,8 @@
     <td> <a class="btn btn-default" href="{% url 'bookmarkupdate'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'bookmarkdeleteperm' pk=bookmark.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td> <a                         href='{{bookmark.name}}' target='_blank'             > <span class='detail'>{{ bookmark.name }}</span> </a> </td>
-    <td>                                                                                   <span class='detail'>{{ bookmark.category }}</span> </td>
-    <td>                                                                                   <span class='detail'>{{ bookmark.subcategory }}</span> </td>
+    <td>                                                                                   <span class='detail'>{{ bookmark.category1 }}</span> </td>
+    <td>                                                                                   <span class='detail'>{{ bookmark.category2 }}</span> </td>
     </tr>
 {% endfor %}
 </table>

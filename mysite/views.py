@@ -223,9 +223,11 @@ class MedreadingDelete(DeleteView):
 def bookmark_list(request, orderby='bookmark'):
     site                                           =   Site.objects.get()           
     if orderby                                     ==  'bookmark':
-        bookmarks                                  =   Bookmark.objects.all().order_by('name')
+        bookmarks                                  =   Bookmark.objects.all().order_by('-priority', 'name')
     else:
-        bookmarks                                  =   Bookmark.objects.all().order_by('category','subcategory','name')
+        bookmarks                                  =   Bookmark.objects.all().order_by('category1','category2','-priority')
+        #bookmarks                                  =   Bookmark.objects.all().order_by('category1')
+        #bookmarks                                  =   Bookmark.objects.all().order_by('category1','name')
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/bookmark_list.html', context)
 
@@ -248,11 +250,17 @@ class BookmarkDelete(DeleteView):
 @login_required
 def category_list(request):
     site                                           =   Site.objects.get()           
-    categorys                                      =   Category.objects.all().order_by('name')
+    categorys                                      =   Category.objects.all().order_by('-priority', 'name')
     context                                        =   { 'categorys': categorys, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/category_list.html', context)
 
 class CategoryInsert(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'mysite/insert_update.html'
+    success_url = reverse_lazy('categorylist')
+
+class CategoryUpdate(UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = 'mysite/insert_update.html'
@@ -265,7 +273,7 @@ class CategoryDelete(DeleteView):
 @login_required
 def identifier_list(request):
     site                                           =   Site.objects.get()           
-    identifiers                                      =   Identifier.objects.all().order_by('name')
+    identifiers                                      =   Identifier.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifiers': identifiers, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/identifier_list.html', context)
 
@@ -275,6 +283,12 @@ class IdentifierInsert(CreateView):
     template_name = 'mysite/insert_update.html'
     success_url = reverse_lazy('identifierlist')
 
+class IdentifierUpdate(UpdateView):
+    model = Identifier
+    form_class = IdentifierForm
+    template_name = 'mysite/insert_update.html'
+    success_url = reverse_lazy('identifierilist')
+
 class IdentifierDelete(DeleteView):
     model = Identifier
     success_url = reverse_lazy('identifierlist')
@@ -282,11 +296,17 @@ class IdentifierDelete(DeleteView):
 @login_required
 def emailhost_list(request):
     site                                           =   Site.objects.get()           
-    emailhosts                                      =   Emailhost.objects.all().order_by('name')
+    emailhosts                                      =   Emailhost.objects.all().order_by('-priority', 'name')
     context                                        =   { 'emailhosts': emailhosts, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/emailhost_list.html', context)
 
 class EmailhostInsert(CreateView):
+    model = Emailhost
+    form_class = EmailhostForm
+    template_name = 'mysite/insert_update.html'
+    success_url = reverse_lazy('emailhostlist')
+
+class EmailhostUpdate(UpdateView):
     model = Emailhost
     form_class = EmailhostForm
     template_name = 'mysite/insert_update.html'
@@ -299,11 +319,17 @@ class EmailhostDelete(DeleteView):
 @login_required
 def identifier2_list(request):
     site                                           =   Site.objects.get()           
-    identifier2s                                      =   Identifier2.objects.all().order_by('name')
+    identifier2s                                      =   Identifier2.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifier2s': identifier2s, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/identifier2_list.html', context)
 
 class Identifier2Insert(CreateView):
+    model = Identifier2
+    form_class = Identifier2Form
+    template_name = 'mysite/insert_update.html'
+    success_url = reverse_lazy('identifier2list')
+
+class Identifier2Update(UpdateView):
     model = Identifier2
     form_class = Identifier2Form
     template_name = 'mysite/insert_update.html'
@@ -317,11 +343,11 @@ class Identifier2Delete(DeleteView):
 def login_list(request, orderby='bookmark'):
     site                                           =   Site.objects.get()           
     if orderby                                     ==  'bookmark':
-        logins                                     =   Login.objects.all().order_by('bookmark')
+        logins                                     =   Login.objects.all().order_by('-priority')
     elif orderby                                   ==  'identifier':
-        logins                                     =   Login.objects.all().order_by('identifier','emailhost','bookmark')
+        logins                                     =   Login.objects.all().order_by('identifier','emailhost','-priority')
     else:
-        logins                                     =   Login.objects.all().order_by('identifier2')
+        logins                                     =   Login.objects.all().order_by('identifier2', '-priority')
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/login_list.html', context)
 
@@ -341,27 +367,3 @@ class LoginDelete(DeleteView):
     model = Login
     success_url = reverse_lazy('loginlist')
 
-"""
-@login_required
-def colour_list(request):
-    site                                           =   Site.objects.get()           
-    colours                                      =   Colour.objects.all().order_by('lightness', 'specification')
-    context                                        =   { 'colours': colours, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/colour_list.html', context)
-
-class ColourInsert(CreateView):
-    model = Colour
-    form_class = ColourForm
-    template_name = 'mysite/insert_update.html'
-    success_url = reverse_lazy('colourlist')
-
-class ColourUpdate(UpdateView):
-    model = Colour
-    form_class = ColourForm
-    template_name = 'mysite/insert_update.html'
-    success_url = reverse_lazy('colourlist')
-
-class ColourDelete(DeleteView):
-    model = Colour
-    success_url = reverse_lazy('colourlist')
-"""

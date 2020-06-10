@@ -5,8 +5,8 @@ from django.conf.urls.static    import static
 from django.conf.urls           import url
 from .                          import views
 from .views  import SiteUpdate, NoteUpdate, PhotoInsert, PhotoDelete, PhotoUpdate, MedreadingInsert, MedreadingDelete, MedreadingUpdate
-from .views  import BookmarkInsert, BookmarkUpdate, BookmarkDelete , CategoryInsert, CategoryDelete , IdentifierInsert, IdentifierDelete
-from .views  import EmailhostInsert, EmailhostDelete , Identifier2Insert, Identifier2Delete , LoginInsert, LoginUpdate, LoginDelete
+from .views  import BookmarkInsert, BookmarkUpdate, BookmarkDelete , CategoryInsert, CategoryUpdate, CategoryDelete , IdentifierInsert, IdentifierUpdate, IdentifierDelete
+from .views  import EmailhostInsert, EmailhostUpdate, EmailhostDelete , Identifier2Insert, Identifier2Update, Identifier2Delete , LoginInsert, LoginUpdate, LoginDelete
 #
 urlpatterns = [
     path('',                                    views.homepage,                                                                name='homepage'),
@@ -37,35 +37,39 @@ urlpatterns = [
     path('medreadingupdate/<int:pk>/',          MedreadingUpdate.as_view(),                          name='medreadingupdate'),
     path('medreadingdeleteperm/<int:pk>/',      MedreadingDelete.as_view(),                          name='medreadingdeleteperm'),
 #
-    path('bookmarklist',                           views.bookmark_list,                                                         name='bookmarklist'),
-    path('bookmarklist/<slug:orderby>/',           views.bookmark_list,                                                         name='bookmarklist'),
-    path('bookmarkinsert',                         BookmarkInsert.as_view(),                                                    name='bookmarkinsert'),
-    path('bookmarkupdate/<int:pk>/',               BookmarkUpdate.as_view(),                                                    name='bookmarkupdate'),
-    path('bookmarkdeleteperm/<int:pk>/',           BookmarkDelete.as_view(),                                                    name='bookmarkdeleteperm'),
+    path('bookmarklist',                           views.bookmark_list,                              name='bookmarklist'),
+    path('bookmarklist/<slug:orderby>/',           views.bookmark_list,                              name='bookmarklist'),
+    path('bookmarkinsert',                         BookmarkInsert.as_view(),                         name='bookmarkinsert'),
+    path('bookmarkupdate/<int:pk>/',               BookmarkUpdate.as_view(),                         name='bookmarkupdate'),
+    path('bookmarkdeleteperm/<int:pk>/',           BookmarkDelete.as_view(),                         name='bookmarkdeleteperm'),
 #
-    path('categorylist',                           views.category_list,                                                         name='categorylist'),
-    path('categoryinsert',                         CategoryInsert.as_view(),                                                    name='categoryinsert'),
-    path('categorydeleteperm/<int:pk>/',           CategoryDelete.as_view(),                                                    name='categorydeleteperm'),
+    path('categorylist',                           views.category_list,                              name='categorylist'),
+    path('categoryinsert',                         CategoryInsert.as_view(),                         name='categoryinsert'),
+    path('categoryupdate/<int:pk>/',               CategoryUpdate.as_view(),                         name='categoryupdate'),
+    path('categorydeleteperm/<int:pk>/',           CategoryDelete.as_view(),                         name='categorydeleteperm'),
 #
-    path('identifierlist',                           views.identifier_list,                                                 name='identifierlist'),
-    path('identifierinsert',                         IdentifierInsert.as_view(),                                            name='identifierinsert'),
-    path('identifierdeleteperm/<int:pk>/',           IdentifierDelete.as_view(),                                            name='identifierdeleteperm'),
+    path('identifierlist',                         views.identifier_list,                            name='identifierlist'),
+    path('identifierinsert',                       IdentifierInsert.as_view(),                       name='identifierinsert'),
+    path('identifierupdate/<int:pk>/',             IdentifierUpdate.as_view(),                       name='identifierupdate'),
+    path('identifierdeleteperm/<int:pk>/',         IdentifierDelete.as_view(),                       name='identifierdeleteperm'),
 #
-    path('emailhostlist',                           views.emailhost_list,                                                 name='emailhostlist'),
-    path('emailhostinsert',                         EmailhostInsert.as_view(),                                            name='emailhostinsert'),
-    path('emailhostdeleteperm/<int:pk>/',           EmailhostDelete.as_view(),                                            name='emailhostdeleteperm'),
+    path('emailhostlist',                          views.emailhost_list,                             name='emailhostlist'),
+    path('emailhostinsert',                        EmailhostInsert.as_view(),                        name='emailhostinsert'),
+    path('emailhostupdate/<int:pk>/',              EmailhostUpdate.as_view(),                        name='emailhostupdate'),
+    path('emailhostdeleteperm/<int:pk>/',          EmailhostDelete.as_view(),                        name='emailhostdeleteperm'),
 #
-    path('identifier2list',                           views.identifier2_list,                                                 name='identifier2list'),
-    path('identifier2insert',                         Identifier2Insert.as_view(),                                            name='identifier2insert'),
-    path('identifier2deleteperm/<int:pk>/',           Identifier2Delete.as_view(),                                            name='identifier2deleteperm'),
+    path('identifier2list',                        views.identifier2_list,                           name='identifier2list'),
+    path('identifier2insert',                      Identifier2Insert.as_view(),                      name='identifier2insert'),
+    path('identifier2update/<int:pk>/',            Identifier2Update.as_view(),                      name='identifier2update'),
+    path('identifier2deleteperm/<int:pk>/',        Identifier2Delete.as_view(),                      name='identifier2deleteperm'),
 #
-    path('loginlist',                           views.login_list,                                                         name='loginlist'),
-    path('loginlist/<slug:orderby>/',           views.login_list,                                                         name='loginlist'),
-    path('logininsert',                         LoginInsert.as_view(),                                                    name='logininsert'),
-    path('loginupdate/<int:pk>/',               LoginUpdate.as_view(),                                                    name='loginupdate'),
-    path('logindeleteperm/<int:pk>/',           LoginDelete.as_view(),                                                    name='logindeleteperm'),
+    path('loginlist',                              views.login_list,                                 name='loginlist'),
+    path('loginlist/<slug:orderby>/',              views.login_list,                                 name='loginlist'),
+    path('logininsert',                            LoginInsert.as_view(),                            name='logininsert'),
+    path('loginupdate/<int:pk>/',                  LoginUpdate.as_view(),                            name='loginupdate'),
+    path('logindeleteperm/<int:pk>/',              LoginDelete.as_view(),                            name='logindeleteperm'),
 #
-    path('password/',                                                                      views.password,          name='password'),
+    path('password/',                              views.password,                                   name='password'),
 ]
 
 #

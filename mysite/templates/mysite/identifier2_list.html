@@ -18,6 +18,7 @@
 {% for identifier2 in identifier2s %}
     <tr>
     <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'identifier2update' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'identifier2deleteperm' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td>                                                                                   <span class='detail'>{{ identifier2.name }}</span> </td>
     </tr>

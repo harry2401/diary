@@ -40,36 +40,30 @@ class MedreadingForm(forms.ModelForm):
 class BookmarkForm(forms.ModelForm):
     class Meta:
         model = Bookmark
-        fields = ('name', 'category', 'subcategory', 'notes')
+        fields = ('name', 'category1', 'category2', 'notes', 'priority')
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('name', 'notes')
+        fields = ('name', 'priority')
 
 class IdentifierForm(forms.ModelForm):
     class Meta:
         model = Identifier
-        fields = ('name', 'notes')
+        fields = ('name', 'priority')
 
 class EmailhostForm(forms.ModelForm):
     class Meta:
         model = Emailhost
-        fields = ('name', 'notes')
+        fields = ('name', 'priority')
 
 class Identifier2Form(forms.ModelForm):
     class Meta:
         model = Identifier2
-        fields = ('name', 'notes')
+        fields = ('name', 'priority')
 
 class LoginForm(forms.ModelForm):
     class Meta:
         model = Login
-        fields = ('bookmark', 'identifier', 'emailhost', 'identifier2', 'notes')
+        fields = ('bookmark', 'identifier', 'emailhost', 'identifier2', 'priority')
 
-"""
-class ColourForm(forms.ModelForm):
-    class Meta:
-        model = Colour
-        fields = ('name', 'specification', 'notes')
-"""
