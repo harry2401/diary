@@ -130,10 +130,11 @@ def event_list(request, periodsought = 'current'):
 @login_required
 def event_change(request, pk, mode):
     event                                                =   get_object_or_404(Event, pk=pk)
-    if mode                                              ==  "deletetemp":
-        event.is_live                                    =   False
-        event.save()
-    elif mode                                            ==  "deleteperm":
+#    if mode                                              ==  "deletetemp":
+#        event.is_live                                    =   False
+#        event.save()
+#    elif mode                                            ==  "deleteperm":
+    if mode                                              ==  "deleteperm":
         event.delete()
     else:                                                                                                       # i.e. mode = "restore"
         event.is_live                                    =   True
@@ -155,7 +156,8 @@ def event_insert_update(request, pk, mode):
             form = EventForm(instance=event)
         else:
             return redirect('eventlist')
-        return render(request, 'mysite/event_insert_update.html', {'form': form})                   # ask user for event details
+        #return render(request, 'mysite/event_insert_update.html', {'form': form})                   # ask user for event details
+        return render(request, 'mysite/insert_update.html', {'form': form})                   # ask user for event details
     else:
         if mode                                               ==  "insert":
             form = EventForm(request.POST)
@@ -165,7 +167,8 @@ def event_insert_update(request, pk, mode):
             event                                   = form.save(commit=False)
             if event.event_date                         < timezone.localtime(timezone.now()).date():
                 error_message                         = 'event date cannot be in the past, please enter a valid date'
-                return render(request, 'mysite/event_insert_update.html', {'form': form, 'error_message': error_message})
+                #return render(request, 'mysite/event_insert_update.html', {'form': form, 'error_message': error_message})
+                return render(request, 'mysite/insert_update.html', {'form': form, 'error_message': error_message})
             else:
                 if mode != 'insert' \
                 and event.event_date == event_saved.event_date \
@@ -177,7 +180,8 @@ def event_insert_update(request, pk, mode):
                     form.save_m2m()
                 return redirect('eventlist')
         else:                                                                                  # i.e. form is not valid, ask user to resubmit it
-            return render(request, 'mysite/event_insert_update.html', {'form': form})
+            #return render(request, 'mysite/event_insert_update.html', {'form': form})
+            return render(request, 'mysite/insert_update.html', {'form': form})
 
 @login_required
 def password(request):

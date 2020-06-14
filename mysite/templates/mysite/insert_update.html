@@ -1,6 +1,16 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+
+    {% if error_message %}
+      <h2 class="error">{{error_message}}</h2>
+    {% endif %}
+
 <h1>Insert a new record into the database or update an existing one</h1>
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="post-form">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Update the database with this data</button>
 </form>
+
+{% endblock %}
