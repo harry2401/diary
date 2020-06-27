@@ -32,24 +32,30 @@
 <table>
     <tr>
      
-    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'bookmark' %} ">
-     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
-    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'category' %} ">
-     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</span></a> </td>
+    <td></td><td></td><td></td><td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'bookmark' %} ">
+     <span>Bookmarks</span></a> </td>
     </tr>
     </h1>
+
+{% comment %}
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'category' %} "> <span>Cat1</span></a> </td>
 </table>
+<table>
+{% endcomment %}
 
 <h2>
-<table>
 {% for bookmark in bookmarks %}
     <tr>
     <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'bookmarksearch'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-search"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'bookmarkupdate'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'bookmarkdeleteperm' pk=bookmark.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td> <a                         href='{{bookmark.name}}' target='_blank'             > <span class='detail'>{{ bookmark.name }}</span> </a> </td>
-    <td>                                                                                   <span class='detail'>{{ bookmark.category1 }}</span> </td>
-    <td>                                                                                   <span class='detail'>{{ bookmark.category2 }}</span> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category1 }}</span> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category2 }}</span> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category3 }}</span> </td>
     </tr>
 {% endfor %}
 </table>

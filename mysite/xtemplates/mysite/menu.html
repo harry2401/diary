@@ -1,8 +1,10 @@
 {% extends "mysite/base.html" %}
-
-<h1 class='label'><a>Identifier2s</a></h1>
-
 {% block content %}
+
+{% comment %}
+{% endcomment %}
+
+
 <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                                <span>Current events</span></a>
 <a class="btn btn-default" href="{% url 'eventlist' 'notcurrent' %}" >                              <span>Past events</span></a>
 <a class="btn btn-default" href="{% url 'eventinsertupdate' pk=0 mode='insert' %}" >                <span>Add event</span></a>
@@ -27,20 +29,8 @@
 <a class="btn btn-default" href="{% url 'identifier2insert' %}" >                                   <span>Add Identifier2</span></a>
 <a class="btn btn-default" href="{% url 'loginlist'  %}">                                           <span>Logins</span></a>
 <a class="btn btn-default" href="{% url 'logininsert' %}" >                                         <span>Add Login</span></a>
+<br>
 <hr>
-
-<h2>
-<table>
-{% for identifier2 in identifier2s %}
-    <tr>
-    <h2 class='item'>
-    <td> <a class="btn btn-default" href="{% url 'identifier2search' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-search"></span></a> </td>
-    <td> <a class="btn btn-default" href="{% url 'identifier2update' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
-    <td> <a class="btn btn-default" href="{% url 'identifier2deleteperm' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
-    <td>                                                                                   <span class='detail'>{{ identifier2.name }}</span> </td>
-    </tr>
-{% endfor %}
-</table>
-</h2>
+         
 </body>
 {% endblock content %}

@@ -3,7 +3,6 @@ from django.contrib.auth.models     import User
 from django.shortcuts               import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls                    import reverse_lazy
-from django.db.models               import Q
 from .models                        import Site, Photo, Event, Medreading, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 from .forms                         import SiteForm, NoteForm, PhotoInsertForm, PhotoUpdateForm
 from .forms                         import EventForm, PasswordForm, MedreadingForm
@@ -230,17 +229,11 @@ def bookmark_list(request, orderby='bookmark'):
     if orderby                                     ==  'bookmark':
         bookmarks                                  =   Bookmark.objects.all().order_by('-priority', 'name')
     else:
-        bookmarks                                  =   Bookmark.objects.all().order_by('category1','category2','category3','-priority')
+        bookmarks                                  =   Bookmark.objects.all().order_by('category1','category2','-priority')
+        #bookmarks                                  =   Bookmark.objects.all().order_by('category1')
+        #bookmarks                                  =   Bookmark.objects.all().order_by('category1','name')
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/bookmark_list.html', context)
-
-@login_required
-def bookmark_search(request, pk):
-    site                                           =   Site.objects.get()           
-    bookmark                                       =   Bookmark.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(bookmark=bookmark)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
 
 class BookmarkInsert(CreateView):
     model = Bookmark
@@ -265,14 +258,6 @@ def category_list(request):
     context                                        =   { 'categorys': categorys, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/category_list.html', context)
 
-@login_required
-def category_search(request, pk):
-    site                                           =   Site.objects.get()           
-    category                                       =   Category.objects.get(id=pk)
-    bookmarks                                      =   Bookmark.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
-    context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/bookmark_list.html', context)
-
 class CategoryInsert(CreateView):
     model = Category
     form_class = CategoryForm
@@ -295,14 +280,6 @@ def identifier_list(request):
     identifiers                                      =   Identifier.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifiers': identifiers, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/identifier_list.html', context)
-
-@login_required
-def identifier_search(request, pk):
-    site                                           =   Site.objects.get()           
-    identifier                                     =   Identifier.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(identifier=identifier)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
 
 class IdentifierInsert(CreateView):
     model = Identifier
@@ -327,14 +304,6 @@ def emailhost_list(request):
     context                                        =   { 'emailhosts': emailhosts, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/emailhost_list.html', context)
 
-@login_required
-def emailhost_search(request, pk):
-    site                                           =   Site.objects.get()           
-    emailhost                                     =   Emailhost.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(emailhost=emailhost)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
-
 class EmailhostInsert(CreateView):
     model = Emailhost
     form_class = EmailhostForm
@@ -357,14 +326,6 @@ def identifier2_list(request):
     identifier2s                                      =   Identifier2.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifier2s': identifier2s, 'title': TITLE, 'site': site}
     return render                                      (request, 'mysite/identifier2_list.html', context)
-
-@login_required
-def identifier2_search(request, pk):
-    site                                           =   Site.objects.get()           
-    identifier2                                    =   Identifier2.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(identifier2=identifier2)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
 
 class Identifier2Insert(CreateView):
     model = Identifier2

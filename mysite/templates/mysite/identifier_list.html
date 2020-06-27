@@ -34,6 +34,7 @@
 {% for identifier in identifiers %}
     <tr>
     <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'identifiersearch' pk=identifier.pk %} "> <span class="glyphicon glyphicon-search"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'identifierupdate' pk=identifier.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
     <td> <a class="btn btn-default" href="{% url 'identifierdeleteperm' pk=identifier.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
     <td>                                                                                   <span class='detail'>{{ identifier.name }}</span> </td>

@@ -92,6 +92,7 @@ class Bookmark(models.Model):
     priority                = models.IntegerField                    (default=100)
     category1               = models.ForeignKey                      ('Category', related_name='cat1',   on_delete=models.CASCADE, blank=True, null=True)
     category2               = models.ForeignKey                      ('Category', related_name='cat2',   on_delete=models.CASCADE, blank=True, null=True)
+    category3               = models.ForeignKey                      ('Category', related_name='cat3',   on_delete=models.CASCADE, blank=True, null=True)
     notes                   = models.TextField                       (                                                             blank=True, null=True)
     last_accessed_date      = models.DateTimeField                   (                                                             default=timezone.now)
     created_date            = models.DateTimeField                   (                                                             default=timezone.now)
@@ -101,24 +102,28 @@ class Bookmark(models.Model):
 class Category(models.Model):
     name                    = models.CharField(max_length=20)
     priority                = models.IntegerField       (default=100)
+    notes                   = models.TextField                       (                                                             blank=True, null=True)
     def __str__(self):
         return str(self.name)
 
 class Identifier(models.Model):
     name                    = models.CharField(max_length=20)
     priority                = models.IntegerField       (default=100)
+    notes                   = models.TextField                       (                                                             blank=True, null=True)
     def __str__(self):
         return str(self.name)
 
 class Emailhost(models.Model):
     name                    = models.CharField(max_length=20)
     priority                = models.IntegerField       (default=100)
+    notes                   = models.TextField                       (                                                             blank=True, null=True)
     def __str__(self):
         return str(self.name)
 
 class Identifier2(models.Model):
     name                    = models.CharField(max_length=20)
     priority                = models.IntegerField       (default=100)
+    notes                   = models.TextField                       (                                                             blank=True, null=True)
     def __str__(self):
         return str(self.name)
 
@@ -128,6 +133,7 @@ class Login(models.Model):
     identifier              = models.ForeignKey('Identifier', on_delete=models.CASCADE, default=1)
     emailhost               = models.ForeignKey('Emailhost', on_delete=models.CASCADE, blank=True, null=True)
     identifier2             = models.ForeignKey('Identifier2', on_delete=models.CASCADE, default=1)
+    notes                   = models.TextField                       (                                                             blank=True, null=True)
     def __str__(self):
         return str(self.bookmark)
 

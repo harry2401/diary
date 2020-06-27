@@ -39,31 +39,26 @@ urlpatterns = [
 #
     path('bookmarklist',                           views.bookmark_list,                              name='bookmarklist'),
     path('bookmarklist/<slug:orderby>/',           views.bookmark_list,                              name='bookmarklist'),
-    path('bookmarksearch/<int:pk>/',               views.bookmark_search,                            name='bookmarksearch'),
     path('bookmarkinsert',                         BookmarkInsert.as_view(),                         name='bookmarkinsert'),
     path('bookmarkupdate/<int:pk>/',               BookmarkUpdate.as_view(),                         name='bookmarkupdate'),
     path('bookmarkdeleteperm/<int:pk>/',           BookmarkDelete.as_view(),                         name='bookmarkdeleteperm'),
 #
     path('categorylist',                           views.category_list,                              name='categorylist'),
-    path('categorysearch/<int:pk>/',               views.category_search,                            name='categorysearch'),
     path('categoryinsert',                         CategoryInsert.as_view(),                         name='categoryinsert'),
     path('categoryupdate/<int:pk>/',               CategoryUpdate.as_view(),                         name='categoryupdate'),
     path('categorydeleteperm/<int:pk>/',           CategoryDelete.as_view(),                         name='categorydeleteperm'),
 #
     path('identifierlist',                         views.identifier_list,                            name='identifierlist'),
-    path('identifiersearch/<int:pk>/',             views.identifier_search,                          name='identifiersearch'),
     path('identifierinsert',                       IdentifierInsert.as_view(),                       name='identifierinsert'),
     path('identifierupdate/<int:pk>/',             IdentifierUpdate.as_view(),                       name='identifierupdate'),
     path('identifierdeleteperm/<int:pk>/',         IdentifierDelete.as_view(),                       name='identifierdeleteperm'),
 #
     path('emailhostlist',                          views.emailhost_list,                             name='emailhostlist'),
-    path('emailhostsearch/<int:pk>/',              views.emailhost_search,                           name='emailhostsearch'),
     path('emailhostinsert',                        EmailhostInsert.as_view(),                        name='emailhostinsert'),
     path('emailhostupdate/<int:pk>/',              EmailhostUpdate.as_view(),                        name='emailhostupdate'),
     path('emailhostdeleteperm/<int:pk>/',          EmailhostDelete.as_view(),                        name='emailhostdeleteperm'),
 #
     path('identifier2list',                        views.identifier2_list,                           name='identifier2list'),
-    path('identifier2search/<int:pk>/',            views.identifier2_search,                         name='identifier2search'),
     path('identifier2insert',                      Identifier2Insert.as_view(),                      name='identifier2insert'),
     path('identifier2update/<int:pk>/',            Identifier2Update.as_view(),                      name='identifier2update'),
     path('identifier2deleteperm/<int:pk>/',        Identifier2Delete.as_view(),                      name='identifier2deleteperm'),

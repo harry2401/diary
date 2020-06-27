@@ -1,6 +1,6 @@
 {% extends "mysite/base.html" %}
 
-<h1 class='label'><a>Identifier2s</a></h1>
+<h1 class='label'><a>Logins</a></h1>
 
 {% block content %}
 <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                                <span>Current events</span></a>
@@ -31,16 +31,34 @@
 
 <h2>
 <table>
-{% for identifier2 in identifier2s %}
+    <tr>
+     
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'bookmark' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'identifier' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifiers</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'loginlist' 'identifier2' %} ">
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifier2s</span></a> </td>
+    </tr>
+    </h1>
+</table>
+<table>
+{% for login in logins %}
     <tr>
     <h2 class='item'>
-    <td> <a class="btn btn-default" href="{% url 'identifier2search' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-search"></span></a> </td>
-    <td> <a class="btn btn-default" href="{% url 'identifier2update' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
-    <td> <a class="btn btn-default" href="{% url 'identifier2deleteperm' pk=identifier2.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
-    <td>                                                                                   <span class='detail'>{{ identifier2.name }}</span> </td>
+    <td> <a class="btn btn-default" href="{% url 'loginupdate' pk=login.pk %} ">           <span class="glyphicon glyphicon-pencil"></span></a> </td>
+    <td> <a class="btn btn-default" href="{% url 'logindeleteperm' pk=login.pk %} ">       <span class="glyphicon glyphicon-remove"></span></a> </td>
+    <td> <a                         href='{{login.bookmark}}' target='_blank'  >           <span class='detail'>{{ login.bookmark }}</span> </a> </td>
+    {% if login.emailhost %}
+    <td>                               <span class='detail'>{{ login.identifier }}@{{login.emailhost}}</span> </td>
+    {% else %}
+    <td>                               <span class='detail'>{{ login.identifier }}</span> </td>
+    {% endif %}
+    <td>                               <span class='detail'>{{ login.identifier2 }}</span> </td>
     </tr>
 {% endfor %}
 </table>
 </h2>
 </body>
 {% endblock content %}
+

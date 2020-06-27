@@ -1,5 +1,7 @@
-#^i#      # adds a '#' to start of line
-#^x        # removes '#' from start of line
+#^i#
+      # adds a '#' to start of line
+#^x
+        # removes '#' from start of line
 
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,16 +12,16 @@ DEBUG = True
 #DEBUG = False
 
 ALLOWED_HOSTS = [
-        '127.0.0.1', 
-        #'localhost', 
-        #'sluffpg.pythonanywhere.com', 
-        #'sluffpg.herokuapp.com', 
+        '127.0.0.1',
+        #'localhost',
+        #'sluffpg.pythonanywhere.com',
+        #'sluffpg.herokuapp.com',
         #'imagesdev.pythonanywhere.com',
         #'imagesdev.herokuapp.com',
         #'imagesdevs3.herokuapp.com',
         #'diarys3.pythonanywhere.com',
         #'diarys3.herokuapp.com',
-        #'diarymy.pythonanywhere.com',
+        #'diarym.pythonanywhere.com',
         #'diarypg.herokuapp.com',
 ]
 
@@ -86,7 +88,7 @@ DATABASES = {
         #'USER': 'user4',
         #'USER': 'diarym',
         #'PASSWORD': 'Septembers%^&*()',                          # local postgres, mysql
-        #'HOST': 'localhost', 
+        #'HOST': 'localhost',
         #'HOST': 'diarym.mysql.pythonanywhere-services.com',
 } }
 #import dj_database_url                                            # heroku postgres          ? local postgres
