@@ -4,10 +4,10 @@ from django.shortcuts               import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls                    import reverse_lazy
 from django.db.models               import Q
-from .models                        import Site, Photo, Event, Medreading, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
+from .models                        import Site, Photo, Event, Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 from .forms                         import SiteForm, NoteForm, PhotoInsertForm, PhotoUpdateForm
 from .forms                         import EventForm, PasswordForm, MedreadingForm
-from .forms                         import BookmarkForm, CategoryForm, IdentifierForm, EmailhostForm, Identifier2Form, LoginForm
+from .forms                         import MemoForm, BookmarkForm, CategoryForm, IdentifierForm, EmailhostForm, Identifier2Form, LoginForm
 from django.views.generic           import CreateView, UpdateView, DeleteView, ListView
 from mysite.settings                import TITLE
 
@@ -25,18 +25,18 @@ def homepage(request):
 def menu(request):
     site                                                                            =  Site.objects.get()
     context                                                                         =   {'site': site}
-    return render                                                                      (request, 'mysite/menu.html', context)
+    return render                                                                      (request, 'menu.html', context)
 
 class SiteUpdate(UpdateView):
     model = Site
     form_class = SiteForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('menu')
 
 class NoteUpdate(UpdateView):
     model = Site
     form_class = NoteForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('menu')
 
 """
@@ -46,7 +46,7 @@ def note_update(request):
     if request.method                                                               != 'POST':
         form                                                                        = noteUpdateForm(instance=site)
         context                                                                     =   {'form': form}
-        return render                                                               (request, 'mysite/note_update.html', context)
+        return render                                                               (request, 'note_update.html', context)
     else:
         form                                                                        = noteUpdateForm(request.POST, instance=site)
         if form.is_valid():
@@ -56,7 +56,7 @@ def note_update(request):
             return redirect('eventlist', 'current')
         else:
             context                                                                 =   {'form': form, 'site': site}
-            return render                                                               (request, 'mysite/note_update.html', context)
+            return render                                                               (request, 'note_update.html', context)
 """
 
 @login_required
@@ -64,25 +64,25 @@ def photo_list(request):
     site                                             =     Site.objects.get()
     photos                                           =     Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
     context                                          =     {'photos': photos, 'liveness': 'live', 'site': site}
-    return render                                          (request, 'mysite/photo_list.html', context)
+    return render                                          (request, 'photo_list.html', context)
 
 @login_required
 def photo_list_deleted(request):
     site                                             =     Site.objects.get()
     photos                                           =     Photo.objects.filter(is_live=False).order_by('-priority','-created_date')
     context                                          =     {'photos': photos, 'liveness': 'deleted', 'site': site}
-    return render                                          (request, 'mysite/photo_list.html', context)
+    return render                                          (request, 'photo_list.html', context)
 
 class PhotoInsert(CreateView):
     model = Photo
     form_class = PhotoInsertForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('photolist')
 
 class PhotoUpdate(UpdateView):
     model = Photo
     form_class = PhotoUpdateForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('photolist')
 
 @login_required
@@ -126,7 +126,7 @@ def event_list(request, periodsought = 'current'):
     #photos 				         = Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
     #context = {'events': events, 'periodsought':periodsought, 'TITLE': TITLE, 'photos' : photos, 'logged_in' : request.user.is_authenticated, 'site': site}
     context = {'events': events, 'periodsought':periodsought, 'TITLE': TITLE, 'logged_in' : request.user.is_authenticated, 'site': site}
-    return render(request, 'mysite/event_list.html', context)
+    return render(request, 'event_list.html', context)
 
 @login_required
 def event_change(request, pk, mode):
@@ -157,8 +157,8 @@ def event_insert_update(request, pk, mode):
             form = EventForm(instance=event)
         else:
             return redirect('eventlist')
-        #return render(request, 'mysite/event_insert_update.html', {'form': form})                   # ask user for event details
-        return render(request, 'mysite/insert_update.html', {'form': form})                   # ask user for event details
+        #return render(request, 'event_insert_update.html', {'form': form})                   # ask user for event details
+        return render(request, 'insert_update.html', {'form': form})                   # ask user for event details
     else:
         if mode                                               ==  "insert":
             form = EventForm(request.POST)
@@ -168,8 +168,8 @@ def event_insert_update(request, pk, mode):
             event                                   = form.save(commit=False)
             if event.event_date                         < timezone.localtime(timezone.now()).date():
                 error_message                         = 'event date cannot be in the past, please enter a valid date'
-                #return render(request, 'mysite/event_insert_update.html', {'form': form, 'error_message': error_message})
-                return render(request, 'mysite/insert_update.html', {'form': form, 'error_message': error_message})
+                #return render(request, 'event_insert_update.html', {'form': form, 'error_message': error_message})
+                return render(request, 'insert_update.html', {'form': form, 'error_message': error_message})
             else:
                 if mode != 'insert' \
                 and event.event_date == event_saved.event_date \
@@ -181,14 +181,14 @@ def event_insert_update(request, pk, mode):
                     form.save_m2m()
                 return redirect('eventlist')
         else:                                                                                  # i.e. form is not valid, ask user to resubmit it
-            #return render(request, 'mysite/event_insert_update.html', {'form': form})
-            return render(request, 'mysite/insert_update.html', {'form': form})
+            #return render(request, 'event_insert_update.html', {'form': form})
+            return render(request, 'insert_update.html', {'form': form})
 
 @login_required
 def password(request):
   if request.method                           != "POST": # i.e. method == "GET":
     form = PasswordForm()
-    return render(request, 'mysite/password.html', {'form': form})
+    return render(request, 'password.html', {'form': form})
   else:                                       # i.e method == 'POST'
     form                                      = PasswordForm(request.POST)
     if form.is_valid():
@@ -198,7 +198,7 @@ def password(request):
       user.save()
       return redirect('eventlist')
     else:                                                                        # i.e. form is not valid, ask user to resubmit it
-      return render(request, 'mysite/insert_update.html', {'form': form})
+      return render(request, 'insert_update.html', {'form': form})
 
 
 @login_required
@@ -206,18 +206,18 @@ def medreading_list(request):
     site                                           =   Site.objects.get()           
     readings                                       =   Medreading.objects.all().order_by('-reading_date')
     context                                        =   { 'readings': readings, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/medreading_list.html', context)
+    return render                                      (request, 'medreading_list.html', context)
 
 class MedreadingInsert(CreateView):
     model = Medreading
     form_class = MedreadingForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('medreadinglist')
 
 class MedreadingUpdate(UpdateView):
     model = Medreading
     form_class = MedreadingForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('medreadinglist')
 
 class MedreadingDelete(DeleteView):
@@ -225,37 +225,71 @@ class MedreadingDelete(DeleteView):
     success_url = reverse_lazy('medreadinglist')
 
 @login_required
+def memo_list(request, orderby='memo'):
+    site                                           =   Site.objects.get()           
+    if orderby                                     ==  'memo':
+        memos                                  =   Memo.objects.all().order_by('-priority', 'content')
+    else:
+        memos                                  =   Memo.objects.all().order_by('category1','category2','category3','-priority')
+    context                                        =   { 'memos': memos, 'title': TITLE, 'site': site}
+    return render                                      (request, 'memo_list.html', context)
+
+@login_required
+def memo_search(request, pk):
+    site                                           =   Site.objects.get()           
+    memo                                       =   Memo.objects.get(id=pk)
+    logins                                         =   Login.objects.filter(memo=memo)
+    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
+    return render                                      (request, 'login_list.html', context)
+
+class MemoInsert(CreateView):
+    model = Memo
+    form_class = MemoForm
+    template_name = 'insert_update.html'
+    success_url = reverse_lazy('memolist')
+
+class MemoUpdate(UpdateView):
+    model = Memo
+    form_class = MemoForm
+    template_name = 'insert_update.html'
+    success_url = reverse_lazy('memolist')
+
+class MemoDelete(DeleteView):
+    model = Memo
+    success_url = reverse_lazy('memolist')
+
+@login_required
 def bookmark_list(request, orderby='bookmark'):
     site                                           =   Site.objects.get()           
     if orderby                                     ==  'bookmark':
-        bookmarks                                  =   Bookmark.objects.all().order_by('-priority', 'name')
+        bookmarks                                  =  Bookmark.objects.all().order_by('-priority', 'name')
     else:
-        bookmarks                                  =   Bookmark.objects.all().order_by('category1','category2','category3','-priority')
+        bookmarks                                  =  Bookmark.objects.all().order_by('category1','category2','category3','-priority')
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/bookmark_list.html', context)
+    return render                                      (request, 'bookmark_list.html', context)
 
 @login_required
 def bookmark_search(request, pk):
     site                                           =   Site.objects.get()           
-    bookmark                                       =   Bookmark.objects.get(id=pk)
+    bookmark                                       =  Bookmark.objects.get(id=pk)
     logins                                         =   Login.objects.filter(bookmark=bookmark)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
+    return render                                      (request, 'login_list.html', context)
 
 class BookmarkInsert(CreateView):
-    model = Bookmark
-    form_class = BookmarkForm
-    template_name = 'mysite/insert_update.html'
+    model =Bookmark
+    form_class =BookmarkForm
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('bookmarklist')
 
 class BookmarkUpdate(UpdateView):
-    model = Bookmark
-    form_class = BookmarkForm
-    template_name = 'mysite/insert_update.html'
+    model =Bookmark
+    form_class =BookmarkForm
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('bookmarklist')
 
 class BookmarkDelete(DeleteView):
-    model = Bookmark
+    model =Bookmark
     success_url = reverse_lazy('bookmarklist')
 
 @login_required
@@ -263,26 +297,34 @@ def category_list(request):
     site                                           =   Site.objects.get()           
     categorys                                      =   Category.objects.all().order_by('-priority', 'name')
     context                                        =   { 'categorys': categorys, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/category_list.html', context)
+    return render                                      (request, 'category_list.html', context)
 
 @login_required
-def category_search(request, pk):
+def category_searchm(request, pk):
+    site                                           =   Site.objects.get()           
+    category                                       =   Category.objects.get(id=pk)
+    memos                                      =   Memo.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
+    context                                        =   { 'memos': memos, 'title': TITLE, 'site': site}
+    return render                                      (request, 'memo_list.html', context)
+
+@login_required
+def category_searchb(request, pk):
     site                                           =   Site.objects.get()           
     category                                       =   Category.objects.get(id=pk)
     bookmarks                                      =   Bookmark.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/bookmark_list.html', context)
+    return render                                      (request, 'bookmark_list.html', context)
 
 class CategoryInsert(CreateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('categorylist')
 
 class CategoryUpdate(UpdateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('categorylist')
 
 class CategoryDelete(DeleteView):
@@ -294,7 +336,7 @@ def identifier_list(request):
     site                                           =   Site.objects.get()           
     identifiers                                      =   Identifier.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifiers': identifiers, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/identifier_list.html', context)
+    return render                                      (request, 'identifier_list.html', context)
 
 @login_required
 def identifier_search(request, pk):
@@ -302,18 +344,18 @@ def identifier_search(request, pk):
     identifier                                     =   Identifier.objects.get(id=pk)
     logins                                         =   Login.objects.filter(identifier=identifier)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
+    return render                                      (request, 'login_list.html', context)
 
 class IdentifierInsert(CreateView):
     model = Identifier
     form_class = IdentifierForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('identifierlist')
 
 class IdentifierUpdate(UpdateView):
     model = Identifier
     form_class = IdentifierForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('identifierilist')
 
 class IdentifierDelete(DeleteView):
@@ -325,7 +367,7 @@ def emailhost_list(request):
     site                                           =   Site.objects.get()           
     emailhosts                                      =   Emailhost.objects.all().order_by('-priority', 'name')
     context                                        =   { 'emailhosts': emailhosts, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/emailhost_list.html', context)
+    return render                                      (request, 'emailhost_list.html', context)
 
 @login_required
 def emailhost_search(request, pk):
@@ -333,18 +375,18 @@ def emailhost_search(request, pk):
     emailhost                                     =   Emailhost.objects.get(id=pk)
     logins                                         =   Login.objects.filter(emailhost=emailhost)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
+    return render                                      (request, 'login_list.html', context)
 
 class EmailhostInsert(CreateView):
     model = Emailhost
     form_class = EmailhostForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('emailhostlist')
 
 class EmailhostUpdate(UpdateView):
     model = Emailhost
     form_class = EmailhostForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('emailhostlist')
 
 class EmailhostDelete(DeleteView):
@@ -356,7 +398,7 @@ def identifier2_list(request):
     site                                           =   Site.objects.get()           
     identifier2s                                      =   Identifier2.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifier2s': identifier2s, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/identifier2_list.html', context)
+    return render                                      (request, 'identifier2_list.html', context)
 
 @login_required
 def identifier2_search(request, pk):
@@ -364,18 +406,18 @@ def identifier2_search(request, pk):
     identifier2                                    =   Identifier2.objects.get(id=pk)
     logins                                         =   Login.objects.filter(identifier2=identifier2)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
+    return render                                      (request, 'login_list.html', context)
 
 class Identifier2Insert(CreateView):
     model = Identifier2
     form_class = Identifier2Form
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('identifier2list')
 
 class Identifier2Update(UpdateView):
     model = Identifier2
     form_class = Identifier2Form
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('identifier2list')
 
 class Identifier2Delete(DeleteView):
@@ -392,18 +434,18 @@ def login_list(request, orderby='bookmark'):
     else:
         logins                                     =   Login.objects.all().order_by('identifier2', '-priority')
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'mysite/login_list.html', context)
+    return render                                      (request, 'login_list.html', context)
 
 class LoginInsert(CreateView):
     model = Login
     form_class = LoginForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('loginlist')
 
 class LoginUpdate(UpdateView):
     model = Login
     form_class = LoginForm
-    template_name = 'mysite/insert_update.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('loginlist')
 
 class LoginDelete(DeleteView):

@@ -5,7 +5,7 @@ from django.conf.urls.static    import static
 from django.conf.urls           import url
 from .                          import views
 from .views  import SiteUpdate, NoteUpdate, PhotoInsert, PhotoDelete, PhotoUpdate, MedreadingInsert, MedreadingDelete, MedreadingUpdate
-from .views  import BookmarkInsert, BookmarkUpdate, BookmarkDelete , CategoryInsert, CategoryUpdate, CategoryDelete , IdentifierInsert, IdentifierUpdate, IdentifierDelete
+from .views  import BookmarkInsert, BookmarkUpdate, BookmarkDelete, MemoInsert, MemoUpdate, MemoDelete , CategoryInsert, CategoryUpdate, CategoryDelete , IdentifierInsert, IdentifierUpdate, IdentifierDelete
 from .views  import EmailhostInsert, EmailhostUpdate, EmailhostDelete , Identifier2Insert, Identifier2Update, Identifier2Delete , LoginInsert, LoginUpdate, LoginDelete
 #
 urlpatterns = [
@@ -37,6 +37,13 @@ urlpatterns = [
     path('medreadingupdate/<int:pk>/',          MedreadingUpdate.as_view(),                          name='medreadingupdate'),
     path('medreadingdeleteperm/<int:pk>/',      MedreadingDelete.as_view(),                          name='medreadingdeleteperm'),
 #
+    path('memolist',                           views.memo_list,                              name='memolist'),
+    path('memolist/<slug:orderby>/',           views.memo_list,                              name='memolist'),
+    path('memosearch/<int:pk>/',               views.memo_search,                            name='memosearch'),
+    path('memoinsert',                         MemoInsert.as_view(),                         name='memoinsert'),
+    path('memoupdate/<int:pk>/',               MemoUpdate.as_view(),                         name='memoupdate'),
+    path('memodeleteperm/<int:pk>/',           MemoDelete.as_view(),                         name='memodeleteperm'),
+#
     path('bookmarklist',                           views.bookmark_list,                              name='bookmarklist'),
     path('bookmarklist/<slug:orderby>/',           views.bookmark_list,                              name='bookmarklist'),
     path('bookmarksearch/<int:pk>/',               views.bookmark_search,                            name='bookmarksearch'),
@@ -45,7 +52,8 @@ urlpatterns = [
     path('bookmarkdeleteperm/<int:pk>/',           BookmarkDelete.as_view(),                         name='bookmarkdeleteperm'),
 #
     path('categorylist',                           views.category_list,                              name='categorylist'),
-    path('categorysearch/<int:pk>/',               views.category_search,                            name='categorysearch'),
+    path('categorysearchb/<int:pk>/',               views.category_searchb,                            name='categorysearchb'),
+    path('categorysearchm/<int:pk>/',               views.category_searchm,                            name='categorysearchm'),
     path('categoryinsert',                         CategoryInsert.as_view(),                         name='categoryinsert'),
     path('categoryupdate/<int:pk>/',               CategoryUpdate.as_view(),                         name='categoryupdate'),
     path('categorydeleteperm/<int:pk>/',           CategoryDelete.as_view(),                         name='categorydeleteperm'),

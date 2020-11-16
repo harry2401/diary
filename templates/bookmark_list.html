@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+<h1 class='label'><a>Bookmarks</a></h1>
+
+{% block content %}
+<a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                                <span>Current events</span></a>
+<a class="btn btn-default" href="{% url 'eventlist' 'notcurrent' %}" >                              <span>Past events</span></a>
+<a class="btn btn-default" href="{% url 'eventinsertupdate' pk=0 mode='insert' %}" >                <span>Add event</span></a>
+<a class="btn btn-default" href="{% url 'photolist'  %}">                                           <span>Photos</span></a>
+<a class="btn btn-default" href="{% url 'photoinsert' %}">                                          <span>Add Photo</span></a>
+<a class="btn btn-default" href="{% url 'photolistdeleted' %}">                                     <span>Deleted photos</span></a>
+<a class="btn btn-default" href="{% url 'medreadinglist'  %}">                                      <span>Medreadings</span></a>
+<a class="btn btn-default" href="{% url 'medreadinginsert' %}">                                     <span>Add Medreading</span></a>
+<a class="btn btn-default" href="{% url 'siteupdate' pk=site.pk %}">                                <span>Colours</span></a>
+<a class="btn btn-default" href="{% url 'password' %}">                                             <span>Password</span></a>
+<a class="btn btn-default" href="{% url 'noteupdate' pk=site.pk %}">                                <span>Note</span></a>
+<br>
+<a class="btn btn-default" href="{% url 'bookmarklist'  %}">                                        <span>Bookmarks</span></a>
+<a class="btn btn-default" href="{% url 'bookmarkinsert'%}" >                                       <span>Add Bookmark</span></a>
+<a class="btn btn-default" href="{% url 'categorylist'  %}">                                        <span>Categories</span></a>
+<a class="btn btn-default" href="{% url 'categoryinsert' %}" >                                      <span>Add Category</span></a>
+<a class="btn btn-default" href="{% url 'identifierlist'  %}">                                      <span>Identifiers</span></a>
+<a class="btn btn-default" href="{% url 'identifierinsert' %}" >                                    <span>Add Identifier</span></a>
+<a class="btn btn-default" href="{% url 'emailhostlist'  %}">                                       <span>Emailhosts</span></a>
+<a class="btn btn-default" href="{% url 'emailhostinsert' %}" >                                     <span>Add Emailhost</span></a>
+<a class="btn btn-default" href="{% url 'identifier2list'  %}">                                     <span>Identifier2s</span></a>
+<a class="btn btn-default" href="{% url 'identifier2insert' %}" >                                   <span>Add Identifier2</span></a>
+<a class="btn btn-default" href="{% url 'loginlist'  %}">                                           <span>Logins</span></a>
+<a class="btn btn-default" href="{% url 'logininsert' %}" >                                         <span>Add Login</span></a>
+<hr>
+<h2>
+<table>
+    <tr>
+     
+    <td></td><td></td><td></td><td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'bookmark' %} ">
+     <span>Bookmarks</span></a> </td>
+    </tr>
+    </h1>
+
+{% comment %}
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bookmarks</span></a> </td>
+     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</span></a> </td>
+    <td><h1 class='label'> <a class="detail" href="{% url 'bookmarklist' 'category' %} "> <span>Cat1</span></a> </td>
+</table>
+<table>
+{% endcomment %}
+
+<h2>
+{% for bookmark in bookmarks %}
+    <tr>
+    <h2 class='item'>
+    <td> <a class="btn btn-default" href="{% url 'bookmarksearch'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-search"></span></a> </td>
+    <td> <a class="btn btn-default" href="{% url 'bookmarkupdate'     pk=bookmark.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> </td>
+    <td> <a class="btn btn-default" href="{% url 'bookmarkdeleteperm' pk=bookmark.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> </td>
+    <td> <a                         href='{{bookmark.name}}' target='_blank'             > <span class='detail'>{{ bookmark.name }}</span> </a> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category1 }}</span> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category2 }}</span> </td>
+    <td>                                                                                   <span class='date'>{{ bookmark.category3 }}</span> </td>
+    </tr>
+{% endfor %}
+</table>
+</h2>
+</body>
+{% endblock content %}

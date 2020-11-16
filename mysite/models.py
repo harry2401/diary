@@ -99,6 +99,17 @@ class Bookmark(models.Model):
     def __str__(self):
         return str(self.name)
 
+class Memo(models.Model):
+    priority                = models.IntegerField                    (default=100)
+    category1               = models.ForeignKey                      ('Category', related_name='mem1',   on_delete=models.CASCADE, blank=True, null=True)
+    category2               = models.ForeignKey                      ('Category', related_name='mem2',   on_delete=models.CASCADE, blank=True, null=True)
+    category3               = models.ForeignKey                      ('Category', related_name='mem3',   on_delete=models.CASCADE, blank=True, null=True)
+    content                 = models.TextField                       (                                                             blank=True, null=True)
+    last_accessed_date      = models.DateTimeField                   (                                                             default=timezone.now)
+    created_date            = models.DateTimeField                   (                                                             default=timezone.now)
+    def __str__(self):
+        return str(self.name)
+
 class Category(models.Model):
     name                    = models.CharField(max_length=20)
     priority                = models.IntegerField       (default=100)
