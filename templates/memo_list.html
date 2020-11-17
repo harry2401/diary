@@ -44,7 +44,7 @@
     <h2 class='item'>
      <a class="btn btn-default" href="{% url 'memoupdate'     pk=memo.pk %} "> <span class="glyphicon glyphicon-pencil"></span></a> 
      <a class="btn btn-default" href="{% url 'memodeleteperm' pk=memo.pk %} "> <span class="glyphicon glyphicon-remove"></span></a> 
-     <a                         href='{{memo.content}}' target='_blank'             > <span class='detail'>{{ memo.content }}</span> </a> 
+     <a                         > <span class='detail'>{{ memo.content|linebreaks }}</span> </a> 
     <hr>
 {% endfor %}
 </h2>
