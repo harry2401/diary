@@ -35,7 +35,7 @@ class Photo(models.Model):
   is_live                 = models.BooleanField       (default=True)
   title                   = models.TextField          (blank=True, null=True)
   cover                   = models.ImageField         (upload_to='images/')
-  created_date            = models.DateTimeField      (default=timezone.now)
+  created_date            = models.DateTimeField      (blank=True, null=True, default=timezone.now)
   def __str__(self):
     return self.title
   def delete(self, using=None, keep_parents=False):
@@ -94,8 +94,8 @@ class Bookmark(models.Model):
     category2               = models.ForeignKey                      ('Category', related_name='cat2',   on_delete=models.CASCADE, blank=True, null=True)
     category3               = models.ForeignKey                      ('Category', related_name='cat3',   on_delete=models.CASCADE, blank=True, null=True)
     notes                   = models.TextField                       (                                                             blank=True, null=True)
-    last_accessed_date      = models.DateTimeField                   (                                                             default=timezone.now)
-    created_date            = models.DateTimeField                   (                                                             default=timezone.now)
+    last_accessed_date      = models.DateTimeField                   (blank=True, null=True,                                      default=timezone.now)
+    created_date            = models.DateTimeField                   (blank=True, null=True,                                   default=timezone.now)
     def __str__(self):
         return str(self.name)
 
@@ -105,10 +105,10 @@ class Memo(models.Model):
     category2               = models.ForeignKey                      ('Category', related_name='mem2',   on_delete=models.CASCADE, blank=True, null=True)
     category3               = models.ForeignKey                      ('Category', related_name='mem3',   on_delete=models.CASCADE, blank=True, null=True)
     content                 = models.TextField                       (                                                             blank=True, null=True)
-    last_accessed_date      = models.DateTimeField                   (                                                             default=timezone.now)
-    created_date            = models.DateTimeField                   (                                                             default=timezone.now)
+    last_accessed_date      = models.DateTimeField                   ( blank=True, null=True,                                   default=timezone.now)
+    created_date            = models.DateTimeField                   (blank=True, null=True,                                    default=timezone.now)
     def __str__(self):
-        return str(self.name)
+        return str(self.content[:50])
 
 class Category(models.Model):
     name                    = models.CharField(max_length=20)

@@ -268,14 +268,6 @@ def bookmark_list(request, orderby='bookmark'):
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
     return render                                      (request, 'bookmark_list.html', context)
 
-@login_required
-def bookmark_search(request, pk):
-    site                                           =   Site.objects.get()           
-    bookmark                                       =  Bookmark.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(bookmark=bookmark)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'login_list.html', context)
-
 class BookmarkInsert(CreateView):
     model =Bookmark
     form_class =BookmarkForm
@@ -436,11 +428,25 @@ def login_list(request, orderby='bookmark'):
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
     return render                                      (request, 'login_list.html', context)
 
+@login_required
+def login_search(request, pk):
+    site                                           =   Site.objects.get()           
+    bookmark                                       =  Bookmark.objects.get(id=pk)
+    logins                                         =   Login.objects.filter(bookmark=bookmark)
+    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
+    return render                                      (request, 'login_list.html', context)
+
 class LoginInsert(CreateView):
     model = Login
     form_class = LoginForm
     template_name = 'insert_update.html'
     success_url = reverse_lazy('loginlist')
+    def form_valid(self, form):
+        bookmark                                = Bookmark.objects.get(pk=self.kwargs['pk'])
+        login                                   = form.save(commit=False)
+        login.bookmark                          = bookmark
+        login.save()
+        return redirect('loginlist')
 
 class LoginUpdate(UpdateView):
     model = Login

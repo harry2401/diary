@@ -46,7 +46,6 @@ urlpatterns = [
 #
     path('bookmarklist',                           views.bookmark_list,                              name='bookmarklist'),
     path('bookmarklist/<slug:orderby>/',           views.bookmark_list,                              name='bookmarklist'),
-    path('bookmarksearch/<int:pk>/',               views.bookmark_search,                            name='bookmarksearch'),
     path('bookmarkinsert',                         BookmarkInsert.as_view(),                         name='bookmarkinsert'),
     path('bookmarkupdate/<int:pk>/',               BookmarkUpdate.as_view(),                         name='bookmarkupdate'),
     path('bookmarkdeleteperm/<int:pk>/',           BookmarkDelete.as_view(),                         name='bookmarkdeleteperm'),
@@ -78,7 +77,8 @@ urlpatterns = [
 #
     path('loginlist',                              views.login_list,                                 name='loginlist'),
     path('loginlist/<slug:orderby>/',              views.login_list,                                 name='loginlist'),
-    path('logininsert',                            LoginInsert.as_view(),                            name='logininsert'),
+    path('loginsearch/<int:pk>/',                  views.login_search,                               name='loginsearch'),
+    path('logininsert/<int:pk>/',                  LoginInsert.as_view(),                            name='logininsert'),
     path('loginupdate/<int:pk>/',                  LoginUpdate.as_view(),                            name='loginupdate'),
     path('logindeleteperm/<int:pk>/',              LoginDelete.as_view(),                            name='logindeleteperm'),
 #

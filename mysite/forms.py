@@ -8,7 +8,6 @@ class SiteForm(forms.ModelForm):
         model = Site
         fields = ('backgroundcolour', 'datecolour', 'detailcolour')
 
-
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Site
@@ -70,5 +69,5 @@ class Identifier2Form(forms.ModelForm):
 class LoginForm(forms.ModelForm):
     class Meta:
         model = Login
-        fields = ('bookmark', 'identifier', 'emailhost', 'identifier2', 'priority', 'notes')
+        fields = ('identifier', 'emailhost', 'identifier2', 'priority', 'notes')
 

@@ -14,6 +14,8 @@
 <a class="btn btn-default" href="{% url 'siteupdate' pk=site.pk %}">                                <span>Colours</span></a>
 <a class="btn btn-default" href="{% url 'password' %}">                                             <span>Password</span></a>
 <a class="btn btn-default" href="{% url 'noteupdate' pk=site.pk %}">                                <span>Note</span></a>
+<a class="btn btn-default" href="{% url 'memolist'  %}">                                            <span>Memos</span></a>
+<a class="btn btn-default" href="{% url 'memoinsert'%}" >                                           <span>Add Memo</span></a>
 <br>
 <a class="btn btn-default" href="{% url 'bookmarklist'  %}">                                        <span>Bookmarks</span></a>
 <a class="btn btn-default" href="{% url 'bookmarkinsert'%}" >                                       <span>Add Bookmark</span></a>
@@ -26,7 +28,6 @@
 <a class="btn btn-default" href="{% url 'identifier2list'  %}">                                     <span>Identifier2s</span></a>
 <a class="btn btn-default" href="{% url 'identifier2insert' %}" >                                   <span>Add Identifier2</span></a>
 <a class="btn btn-default" href="{% url 'loginlist'  %}">                                           <span>Logins</span></a>
-<a class="btn btn-default" href="{% url 'logininsert' %}" >                                         <span>Add Login</span></a>
 <hr>
 
 <h2>
