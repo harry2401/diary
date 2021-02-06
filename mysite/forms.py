@@ -1,6 +1,6 @@
 from django                              import forms
 from django.forms.widgets                import CheckboxSelectMultiple
-from .models                             import Site, Photo, Event
+from .models                             import Site, Photo, Event, Event_Old
 from .models                             import Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 
 class SiteForm(forms.ModelForm):
@@ -26,6 +26,11 @@ class PhotoUpdateForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
+        fields = ('event_date', 'detail', 'addendum')
+
+class Event_OldForm(forms.ModelForm):
+    class Meta:
+        model = Event_Old
         fields = ('event_date', 'detail', 'addendum')
 
 class PasswordForm(forms.Form):

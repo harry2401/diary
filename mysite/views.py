@@ -4,7 +4,7 @@ from django.shortcuts               import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls                    import reverse_lazy
 from django.db.models               import Q
-from .models                        import Site, Photo, Event, Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
+from .models                        import Site, Photo, Event, Event_Old, Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 from .forms                         import SiteForm, NoteForm, PhotoInsertForm, PhotoUpdateForm
 from .forms                         import EventForm, PasswordForm, MedreadingForm
 from .forms                         import MemoForm, BookmarkForm, CategoryForm, IdentifierForm, EmailhostForm, Identifier2Form, LoginForm
@@ -180,6 +180,80 @@ def event_insert_update(request, pk, mode):
                     event.save()
                     form.save_m2m()
                 return redirect('eventlist')
+        else:                                                                                  # i.e. form is not valid, ask user to resubmit it
+            #return render(request, 'event_insert_update.html', {'form': form})
+            return render(request, 'insert_update.html', {'form': form})
+
+
+@login_required
+def eventold_list(request, order = 'forward'):
+    site                                                                            =  Site.objects.get()
+    if order == 'forward':
+        events = Event_Old.objects.filter(is_live=True).order_by('event_date')
+    else:
+        events = Event_Old.objects.filter(is_live=True).order_by('-event_date')
+
+    stored_event_date = '2000-01-01'
+    for event in events:
+        current_event_date                       =  event.event_date
+        if event.event_date                      ==  stored_event_date:
+            event.sameday                        =  True
+        else:
+            event.sameday                        =  False
+        stored_event_date                        =  current_event_date
+
+    context = {'events': events, 'TITLE': TITLE, 'logged_in' : request.user.is_authenticated, 'site': site}
+    return render(request, 'eventold_list.html', context)
+
+@login_required
+def eventold_change(request, pk, mode):
+    event                                                =   get_object_or_404(Event, pk=pk)
+#    if mode                                              ==  "deletetemp":
+#        event.is_live                                    =   False
+#        event.save()
+#    elif mode                                            ==  "deleteperm":
+    if mode                                              ==  "deleteperm":
+        event.delete()
+    else:                                                                                                       # i.e. mode = "restore"
+        event.is_live                                    =   True
+        event.save()
+    return redirect                                      ('eventoldlist', 'forward')
+
+@login_required
+def eventold_insert_update(request, pk, mode):
+    if mode                                               !=  "insert":
+      event                                     = get_object_or_404(Event_Old, pk=pk)
+      event_saved                                     = get_object_or_404(Event_Old, pk=pk)                           # change 1006
+    if request.method                           != 'POST':
+        if mode                                           ==  'insert':
+            form = EventForm()
+        elif mode                                         ==  'update':
+            form = EventForm(instance=event)
+        else:
+            return redirect('eventoldlist', 'forward')
+        #return render(request, 'event_insert_update.html', {'form': form})                   # ask user for event details
+        return render(request, 'insert_update.html', {'form': form})                   # ask user for event details
+    else:
+        if mode                                               ==  "insert":
+            form = Event_OldForm(request.POST)
+        else:
+            form = Event_OldForm(request.POST, instance=event)
+        if form.is_valid():
+            event                                   = form.save(commit=False)
+            if event.event_date                         < timezone.localtime(timezone.now()).date():
+                error_message                         = 'event date cannot be in the past, please enter a valid date'
+                #return render(request, 'event_insert_update.html', {'form': form, 'error_message': error_message})
+                return render(request, 'insert_update.html', {'form': form, 'error_message': error_message})
+            else:
+                if mode != 'insert' \
+                and event.event_date == event_saved.event_date \
+                and event.detail == event_saved.detail \
+                and event.addendum == event_saved.addendum:
+                    pass
+                else:
+                    event.save()
+                    form.save_m2m()
+                return redirect('eventoldlist', 'forward')
         else:                                                                                  # i.e. form is not valid, ask user to resubmit it
             #return render(request, 'event_insert_update.html', {'form': form})
             return render(request, 'insert_update.html', {'form': form})

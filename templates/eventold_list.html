@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if periodsought != 'current' %}
-    <h1><a><span> Events that have either been deleted or have become outdated</span></a></h1>
-{% endif %}
-
 <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                                <span>Current events</span></a>
 <a class="btn btn-default" href="{% url 'eventlist' 'notcurrent' %}" >                              <span>Past events</span></a>
 <a class="btn btn-default" href="{% url 'eventoldlist' 'forward'  %}" >                                <span>Old events</span></a>
@@ -43,17 +39,9 @@
     {% endif %}
     <h2>
     <p>
-    {% if periodsought == 'current' %}
-          <a class="btn btn-default"           href="{%           url 'eventinsertupdate'   pk=event.pk mode="update"     %} "> 
-          <span class="glyphicon glyphicon-pencil" style="color:black"></span></a>
-    {% elif event.status_now == 'past'%}
-          <a class="btn btn-default" href="{%                     url 'eventinsertupdate'   pk=event.pk mode="update"     %} "> 
-          <span class="glyphicon glyphicon-pencil" style="color:black"></span></a>
-    {% else %}                                                                   
-          <a class="btn btn-default" href="{%                     url 'eventchange'         pk=event.pk mode="restore"    %} ">
-          <span class="glyphicon glyphicon-pencil" style="color:black"></span></a>
-    {% endif %}
-     <a class="btn btn-default"           href="{%           url 'eventchange'         pk=event.pk mode="deleteperm" %} "> 
+     <a class="btn btn-default" href="{%                     url 'eventoldinsertupdate'   pk=event.pk mode="update"     %} "> 
+     <span class="glyphicon glyphicon-pencil" style="color:black"></span></a>
+     <a class="btn btn-default"           href="{%           url 'eventoldchange'         pk=event.pk mode="deleteperm" %} "> 
      <span class="glyphicon glyphicon-remove" style="color:black"></span></a>
 
     <a class="item"><span class="detail" style="color:{{site.detailcolour}}" >{{ event.detail}}</span></a>

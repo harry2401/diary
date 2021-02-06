@@ -32,6 +32,10 @@ urlpatterns = [
     path('eventinsertupdate/<int:pk>/<slug:mode>/)',      views.event_insert_update,                name='eventinsertupdate'),
     path('eventchange/<int:pk>/<slug:mode>/',   views.event_change,                                                            name='eventchange'),
 #
+    path('eventoldlist/<slug:order>/)',               views.eventold_list,                         name='eventoldlist'),
+    path('eventoldinsertupdate/<int:pk>/<slug:mode>/)',      views.eventold_insert_update,                name='eventoldinsertupdate'),
+    path('eventoldchange/<int:pk>/<slug:mode>/',   views.eventold_change,                            name='eventoldchange'),
+#
     path('medreadinglist',                      views.medreading_list,                                                        name='medreadinglist'),
     path('medreadinginsert',                    MedreadingInsert.as_view(),                          name='medreadinginsert'),
     path('medreadingupdate/<int:pk>/',          MedreadingUpdate.as_view(),                          name='medreadingupdate'),
