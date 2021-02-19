@@ -166,9 +166,14 @@ def event_insert_update(request, pk, mode):
             form = EventForm(request.POST, instance=event)
         if form.is_valid():
             event                                   = form.save(commit=False)
+            event.save()
+            form.save_m2m()
+            return redirect('eventlist')
+        else:                                                                                  
+            return render(request, 'insert_update.html', {'form': form})
+"""            
             if event.event_date                         < timezone.localtime(timezone.now()).date():
                 error_message                         = 'event date cannot be in the past, please enter a valid date'
-                #return render(request, 'event_insert_update.html', {'form': form, 'error_message': error_message})
                 return render(request, 'insert_update.html', {'form': form, 'error_message': error_message})
             else:
                 if mode != 'insert' \
@@ -180,9 +185,9 @@ def event_insert_update(request, pk, mode):
                     event.save()
                     form.save_m2m()
                 return redirect('eventlist')
-        else:                                                                                  # i.e. form is not valid, ask user to resubmit it
-            #return render(request, 'event_insert_update.html', {'form': form})
+        else:                                                                                  
             return render(request, 'insert_update.html', {'form': form})
+"""            
 
 
 @login_required
@@ -285,7 +290,7 @@ def medreading_list(request):
 class MedreadingInsert(CreateView):
     model = Medreading
     form_class = MedreadingForm
-    template_name = 'insert_update.html'
+    template_name = 'medreading_insert.html'
     success_url = reverse_lazy('medreadinglist')
 
 class MedreadingUpdate(UpdateView):
@@ -506,7 +511,7 @@ def login_list(request, orderby='bookmark'):
 def login_search(request, pk):
     site                                           =   Site.objects.get()           
     bookmark                                       =  Bookmark.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(bookmark=bookmark)
+    logins                                         =   Login.objects.filter(bookmark=bookmark).order_by('identifier','emailhost','priority')
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
     return render                                      (request, 'login_list.html', context)
 
