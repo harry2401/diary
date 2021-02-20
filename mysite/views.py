@@ -314,12 +314,22 @@ def memo_list(request, orderby='memo'):
     return render                                      (request, 'memo_list.html', context)
 
 @login_required
+def memo_category_list(request, pk):
+    site                                           =   Site.objects.get()           
+    category                                       =   Category.objects.get(id=pk)
+    memos                                      =   Memo.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
+    context                                        =   { 'memos': memos, 'title': TITLE, 'site': site}
+    return render                                      (request, 'memo_list.html', context)
+
+"""
+@login_required
 def memo_search(request, pk):
     site                                           =   Site.objects.get()           
     memo                                       =   Memo.objects.get(id=pk)
     logins                                         =   Login.objects.filter(memo=memo)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
     return render                                      (request, 'login_list.html', context)
+"""
 
 class MemoInsert(CreateView):
     model = Memo
@@ -347,6 +357,14 @@ def bookmark_list(request, orderby='bookmark'):
     context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
     return render                                      (request, 'bookmark_list.html', context)
 
+@login_required
+def bookmark_category_list(request, pk):
+    site                                           =   Site.objects.get()           
+    category                                       =   Category.objects.get(id=pk)
+    bookmarks                                      =   Bookmark.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
+    context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
+    return render                                      (request, 'bookmark_list.html', context)
+
 class BookmarkInsert(CreateView):
     model =Bookmark
     form_class =BookmarkForm
@@ -369,22 +387,6 @@ def category_list(request):
     categorys                                      =   Category.objects.all().order_by('-priority', 'name')
     context                                        =   { 'categorys': categorys, 'title': TITLE, 'site': site}
     return render                                      (request, 'category_list.html', context)
-
-@login_required
-def category_searchm(request, pk):
-    site                                           =   Site.objects.get()           
-    category                                       =   Category.objects.get(id=pk)
-    memos                                      =   Memo.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
-    context                                        =   { 'memos': memos, 'title': TITLE, 'site': site}
-    return render                                      (request, 'memo_list.html', context)
-
-@login_required
-def category_searchb(request, pk):
-    site                                           =   Site.objects.get()           
-    category                                       =   Category.objects.get(id=pk)
-    bookmarks                                      =   Bookmark.objects.filter(Q(category1 = category)|Q(category2 = category)|Q(category3 = category))
-    context                                        =   { 'bookmarks': bookmarks, 'title': TITLE, 'site': site}
-    return render                                      (request, 'bookmark_list.html', context)
 
 class CategoryInsert(CreateView):
     model = Category
@@ -409,14 +411,6 @@ def identifier_list(request):
     context                                        =   { 'identifiers': identifiers, 'title': TITLE, 'site': site}
     return render                                      (request, 'identifier_list.html', context)
 
-@login_required
-def identifier_search(request, pk):
-    site                                           =   Site.objects.get()           
-    identifier                                     =   Identifier.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(identifier=identifier)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'login_list.html', context)
-
 class IdentifierInsert(CreateView):
     model = Identifier
     form_class = IdentifierForm
@@ -440,14 +434,6 @@ def emailhost_list(request):
     context                                        =   { 'emailhosts': emailhosts, 'title': TITLE, 'site': site}
     return render                                      (request, 'emailhost_list.html', context)
 
-@login_required
-def emailhost_search(request, pk):
-    site                                           =   Site.objects.get()           
-    emailhost                                     =   Emailhost.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(emailhost=emailhost)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'login_list.html', context)
-
 class EmailhostInsert(CreateView):
     model = Emailhost
     form_class = EmailhostForm
@@ -470,14 +456,6 @@ def identifier2_list(request):
     identifier2s                                      =   Identifier2.objects.all().order_by('-priority', 'name')
     context                                        =   { 'identifier2s': identifier2s, 'title': TITLE, 'site': site}
     return render                                      (request, 'identifier2_list.html', context)
-
-@login_required
-def identifier2_search(request, pk):
-    site                                           =   Site.objects.get()           
-    identifier2                                    =   Identifier2.objects.get(id=pk)
-    logins                                         =   Login.objects.filter(identifier2=identifier2)
-    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
-    return render                                      (request, 'login_list.html', context)
 
 class Identifier2Insert(CreateView):
     model = Identifier2
@@ -508,10 +486,34 @@ def login_list(request, orderby='bookmark'):
     return render                                      (request, 'login_list.html', context)
 
 @login_required
-def login_search(request, pk):
+def login_bookmark_list(request, pk):
     site                                           =   Site.objects.get()           
     bookmark                                       =  Bookmark.objects.get(id=pk)
     logins                                         =   Login.objects.filter(bookmark=bookmark).order_by('identifier','emailhost','priority')
+    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
+    return render                                      (request, 'login_list.html', context)
+
+@login_required
+def login_identifier_list(request, pk):
+    site                                           =   Site.objects.get()           
+    identifier                                     =   Identifier.objects.get(id=pk)
+    logins                                         =   Login.objects.filter(identifier=identifier)
+    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
+    return render                                      (request, 'login_list.html', context)
+
+@login_required
+def login_emailhost_list(request, pk):
+    site                                           =   Site.objects.get()           
+    emailhost                                     =   Emailhost.objects.get(id=pk)
+    logins                                         =   Login.objects.filter(emailhost=emailhost)
+    context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
+    return render                                      (request, 'login_list.html', context)
+
+@login_required
+def login_identifier2_list(request, pk):
+    site                                           =   Site.objects.get()           
+    identifier2                                    =   Identifier2.objects.get(id=pk)
+    logins                                         =   Login.objects.filter(identifier2=identifier2)
     context                                        =   { 'logins': logins, 'title': TITLE, 'site': site}
     return render                                      (request, 'login_list.html', context)
 
