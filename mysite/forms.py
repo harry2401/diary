@@ -1,7 +1,7 @@
 from django                              import forms
 from django.forms.widgets                import CheckboxSelectMultiple
 from .models                             import Site, Photo, Event, Event_Old
-from .models                             import Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
+from .models                             import Medreading, Weight, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 
 class SiteForm(forms.ModelForm):
     class Meta:
@@ -39,6 +39,11 @@ class PasswordForm(forms.Form):
 class MedreadingForm(forms.ModelForm):
     class Meta:
         model = Medreading
+        fields = ('weight', 'glucose', 'blood_pressure_1', 'blood_pressure_2', 'HbA1c', 'HDL', 'LDL', 'reading_date', 'notes')
+
+class WeightForm(forms.ModelForm):
+    class Meta:
+        model = Weight
         fields = ('weight', 'glucose', 'blood_pressure_1', 'blood_pressure_2', 'HbA1c', 'HDL', 'LDL', 'reading_date', 'notes')
 
 class MemoForm(forms.ModelForm):

@@ -4,7 +4,7 @@ from django.conf                import settings
 from django.conf.urls.static    import static
 from django.conf.urls           import url
 from .                          import views
-from .views  import SiteUpdate, NoteUpdate, PhotoInsert, PhotoDelete, PhotoUpdate, MedreadingInsert, MedreadingDelete, MedreadingUpdate
+from .views  import SiteUpdate, NoteUpdate, PhotoInsert, PhotoDelete, PhotoUpdate, MedreadingInsert, MedreadingDelete, MedreadingUpdate, WeightInsert, WeightDelete, WeightUpdate
 from .views  import BookmarkInsert, BookmarkUpdate, BookmarkDelete, MemoInsert, MemoUpdate, MemoDelete , CategoryInsert, CategoryUpdate, CategoryDelete , IdentifierInsert, IdentifierUpdate, IdentifierDelete
 from .views  import EmailhostInsert, EmailhostUpdate, EmailhostDelete , Identifier2Insert, Identifier2Update, Identifier2Delete , LoginInsert, LoginUpdate, LoginDelete
 #
@@ -40,6 +40,11 @@ urlpatterns = [
     path('medreadinginsert',                    MedreadingInsert.as_view(),                          name='medreadinginsert'),
     path('medreadingupdate/<int:pk>/',          MedreadingUpdate.as_view(),                          name='medreadingupdate'),
     path('medreadingdeleteperm/<int:pk>/',      MedreadingDelete.as_view(),                          name='medreadingdeleteperm'),
+#
+    path('weightlist',                      views.weight_list,                                                        name='weightlist'),
+    path('weightinsert',                    WeightInsert.as_view(),                          name='weightinsert'),
+    path('weightupdate/<int:pk>/',          WeightUpdate.as_view(),                          name='weightupdate'),
+    path('weightdeleteperm/<int:pk>/',      WeightDelete.as_view(),                          name='weightdeleteperm'),
 #
     path('memolist',                           views.memo_list,                              name='memolist'),
     path('memolist/<slug:orderby>/',           views.memo_list,                              name='memolist'),

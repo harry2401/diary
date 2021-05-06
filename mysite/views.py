@@ -4,9 +4,9 @@ from django.shortcuts               import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls                    import reverse_lazy
 from django.db.models               import Q
-from .models                        import Site, Photo, Event, Event_Old, Medreading, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
+from .models                        import Site, Photo, Event, Event_Old, Medreading, Weight, Memo, Bookmark, Category, Identifier, Emailhost, Identifier2, Login
 from .forms                         import SiteForm, NoteForm, PhotoInsertForm, PhotoUpdateForm
-from .forms                         import EventForm, PasswordForm, MedreadingForm
+from .forms                         import EventForm, PasswordForm, MedreadingForm, WeightForm
 from .forms                         import MemoForm, BookmarkForm, CategoryForm, IdentifierForm, EmailhostForm, Identifier2Form, LoginForm
 from django.views.generic           import CreateView, UpdateView, DeleteView, ListView
 from mysite.settings                import TITLE
@@ -302,6 +302,29 @@ class MedreadingUpdate(UpdateView):
 class MedreadingDelete(DeleteView):
     model = Medreading
     success_url = reverse_lazy('medreadinglist')
+
+@login_required
+def weight_list(request):
+    site                                           =   Site.objects.get()           
+    readings                                       =   Weight.objects.all().order_by('-reading_date')
+    context                                        =   { 'readings': readings, 'title': TITLE, 'site': site}
+    return render                                      (request, 'weight_list.html', context)
+
+class WeightInsert(CreateView):
+    model = Weight
+    form_class = WeightForm
+    template_name = 'weight_insert.html'
+    success_url = reverse_lazy('weightlist')
+
+class WeightUpdate(UpdateView):
+    model = Weight
+    form_class = WeightForm
+    template_name = 'insert_update.html'
+    success_url = reverse_lazy('weightlist')
+
+class WeightDelete(DeleteView):
+    model = Weight
+    success_url = reverse_lazy('weightlist')
 
 @login_required
 def memo_list(request, orderby='memo'):
