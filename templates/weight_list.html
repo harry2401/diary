@@ -37,7 +37,7 @@
 <table>
     <h2 class='item'>
     <tr>
-    <td></td><td></td><td>weight</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gluc</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blood</td><td>pressure</td><td>HbA1c</td><td>HDL</td><td>LDL</td>
+    <td></td><td></td><td>weight</td>
     <tr>
     </tr>
     </h2>
@@ -60,6 +60,7 @@
                 <span class='detail'>___</span>
               {% endif %}
              </td>
+{% comment %}
             <td>
               {% if reading.glucose > 0  %}
                 <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;{{ reading.glucose|rjust:"20" }}  </span>
@@ -102,6 +103,7 @@
                 <span class='detail'>___</span>
               {% endif %}
              </td>
+{% endcomment %}
             <td>
                {% if reading.notes  %} <span class='detail'>&nbsp;&nbsp;&nbsp;{{ reading.notes }}</span> {% endif %}
              </td>

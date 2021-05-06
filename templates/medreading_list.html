@@ -37,7 +37,7 @@
 <table>
     <h2 class='item'>
     <tr>
-    <td></td><td></td><td>weight</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gluc</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blood</td><td>pressure</td><td>HbA1c</td><td>HDL</td><td>LDL</td>
+    <td></td><td></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gluc</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blood</td><td>pressure</td><td>HbA1c</td><td>HDL</td><td>LDL</td>
     <tr>
     </tr>
     </h2>
@@ -52,6 +52,7 @@
              </td>
  <td>
     <span class='detail'>{{ reading.reading_date|date:"d-m-y" }}</span>
+{% comment %}
              </td>
             <td>
               {% if reading.weight > 0  %}
@@ -60,6 +61,7 @@
                 <span class='detail'>___</span>
               {% endif %}
              </td>
+{% endcomment %}
             <td>
               {% if reading.glucose > 0  %}
                 <span class='detail'>&nbsp;&nbsp;&nbsp;&nbsp;{{ reading.glucose|rjust:"20" }}  </span>

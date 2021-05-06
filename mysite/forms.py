@@ -39,12 +39,12 @@ class PasswordForm(forms.Form):
 class MedreadingForm(forms.ModelForm):
     class Meta:
         model = Medreading
-        fields = ('weight', 'glucose', 'blood_pressure_1', 'blood_pressure_2', 'HbA1c', 'HDL', 'LDL', 'reading_date', 'notes')
+        fields = ('glucose', 'blood_pressure_1', 'blood_pressure_2', 'HbA1c', 'HDL', 'LDL', 'reading_date', 'notes')
 
 class WeightForm(forms.ModelForm):
     class Meta:
         model = Weight
-        fields = ('weight', 'glucose', 'blood_pressure_1', 'blood_pressure_2', 'HbA1c', 'HDL', 'LDL', 'reading_date', 'notes')
+        fields = ('weight',)
 
 class MemoForm(forms.ModelForm):
     class Meta:

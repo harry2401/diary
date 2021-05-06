@@ -114,19 +114,12 @@ class Weight(models.Model):
     reading_date            = models.DateTimeField(default=timezone.now, blank=True, null=True)
     weight                  = models.DecimalField(max_digits=4,decimal_places=1,blank=True,null=True)
     notes                   = models.TextField(blank=True,null=True)
-    glucose                 = models.DecimalField(max_digits=3,decimal_places=1,blank=True,null=True)
-    HbA1c                   = models.DecimalField(max_digits=2,decimal_places=0,blank=True,null=True)
-    blood_pressure_1        = models.DecimalField(max_digits=3,decimal_places=0,blank=True,null=True)
-    blood_pressure_2        = models.DecimalField(max_digits=3,decimal_places=0,blank=True,null=True)
-    HDL                     = models.DecimalField(max_digits=4,decimal_places=2,blank=True,null=True)
-    LDL                     = models.DecimalField(max_digits=3,decimal_places=1,blank=True,null=True)
     created_date            = models.DateTimeField(default=timezone.now, blank=True, null=True)
     def __str__(self):
         return str(self.reading_date)
 
 class Medreading(models.Model):
     reading_date            = models.DateTimeField(default=timezone.now, blank=True, null=True)
-    weight                  = models.DecimalField(max_digits=4,decimal_places=1,blank=True,null=True)
     notes                   = models.TextField(blank=True,null=True)
     glucose                 = models.DecimalField(max_digits=3,decimal_places=1,blank=True,null=True)
     HbA1c                   = models.DecimalField(max_digits=2,decimal_places=0,blank=True,null=True)
