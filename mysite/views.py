@@ -290,7 +290,7 @@ def medreading_list(request):
 class MedreadingInsert(CreateView):
     model = Medreading
     form_class = MedreadingForm
-    template_name = 'medreading_insert.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('medreadinglist')
 
 class MedreadingUpdate(UpdateView):
@@ -313,7 +313,7 @@ def weight_list(request):
 class WeightInsert(CreateView):
     model = Weight
     form_class = WeightForm
-    template_name = 'weight_insert.html'
+    template_name = 'insert_update.html'
     success_url = reverse_lazy('weightlist')
 
 class WeightUpdate(UpdateView):

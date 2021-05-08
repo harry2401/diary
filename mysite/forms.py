@@ -44,7 +44,7 @@ class MedreadingForm(forms.ModelForm):
 class WeightForm(forms.ModelForm):
     class Meta:
         model = Weight
-        fields = ('weight',)
+        fields = ('weight', 'reading_date', 'notes')
 
 class MemoForm(forms.ModelForm):
     class Meta:
