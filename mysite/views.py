@@ -9,7 +9,7 @@ from .forms                         import SiteForm, NoteForm, PhotoInsertForm, 
 from .forms                         import EventForm, PasswordForm, MedreadingForm, WeightForm
 from .forms                         import MemoForm, BookmarkForm, CategoryForm, IdentifierForm, EmailhostForm, Identifier2Form, LoginForm
 from django.views.generic           import CreateView, UpdateView, DeleteView, ListView
-from mysite.settings                import TITLE
+from config.settings                import TITLE
 
 
 def fromlogin(request):
